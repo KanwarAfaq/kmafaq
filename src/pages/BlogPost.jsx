@@ -83,7 +83,7 @@ export default function BlogPost() {
             onClick={() => navigate('/blog')}
             className="flex items-center gap-2 text-white/70 hover:text-white text-sm mb-4 transition-colors"
           >
-            <FiArrowLeft size={16} /> Back to Blog
+            <FiArrowLeft size={16} /> Back to Blogs
           </button>
           <h1 className="text-2xl md:text-4xl font-black text-white leading-tight">
             {post.title}
