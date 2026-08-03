@@ -1,0 +1,78 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --accent-dark: #4f46e5;
+}
+[data-theme="theme2"] {
+  --accent: #10b981;
+  --accent-light: #34d399;
+  --accent-dark: #059669;
+}
+[data-theme="theme3"] {
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --accent-dark: #d97706;
+}
+
+* { scroll-behavior: smooth; box-sizing: border-box; }
+
+body {
+  
+  @apply font-sans antialiased bg-white dark:bg-gray-950
+         text-gray-900 dark:text-gray-100 transition-colors duration-300;
+}
+
+.text-accent  { color: var(--accent) !important; }
+.bg-accent    { background-color: var(--accent) !important; }
+.border-accent { border-color: var(--accent) !important; }
+
+.btn-accent {
+  background-color: var(--accent);
+  @apply text-white font-semibold px-6 py-3 rounded-xl
+         hover:opacity-90 active:scale-95 transition-all duration-200
+         inline-flex items-center gap-2 cursor-pointer;
+}
+.btn-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  @apply font-semibold px-6 py-3 rounded-xl transition-all duration-200
+         inline-flex items-center gap-2 cursor-pointer bg-transparent;
+}
+.btn-outline:hover { background-color: var(--accent); color: white; }
+
+.glass { @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl; }
+.glass-dark { @apply backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl; }
+
+.section-padding { @apply py-20 px-4 md:px-8 lg:px-16 xl:px-24; }
+.section-title { @apply text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white; }
+.section-subtitle { @apply text-lg text-gray-500 dark:text-gray-400 mb-12 max-w-2xl; }
+
+.tag-pill {
+  @apply text-xs font-medium px-3 py-1 rounded-full
+         border border-accent text-accent bg-transparent whitespace-nowrap;
+}
+
+.cinematic-card {
+  @apply relative overflow-hidden rounded-2xl cursor-pointer;
+  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease;
+}
+.cinematic-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+}
+.cinematic-overlay {
+  @apply absolute inset-0 flex flex-col justify-end p-6;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 55%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.cinematic-card:hover .cinematic-overlay { opacity: 1; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-gray-900; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+html { scroll-behavior: smooth; }
