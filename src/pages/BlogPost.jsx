@@ -62,7 +62,7 @@ export default function BlogPost() {
   if (!post) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Post not found</h2>
-      <Link to="/blog" className="btn-accent">Back to Blog</Link>
+      <Link to="/blog" className="btn-accent">Back to Blogs</Link>
     </div>
   )
 
