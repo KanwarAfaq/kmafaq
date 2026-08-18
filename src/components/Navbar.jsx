@@ -18,6 +18,7 @@ const navLinks = [
   { label: 'Blog',       path: '/blog' },
   { label: 'Contact',    path: '/contact' },
   { label: '✦ All-in-One', path: '/all-in-one' },
+  { label: 'Scholarships', path: '/scholarships' }
 ]
 
 const themes = [

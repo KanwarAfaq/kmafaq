@@ -34,6 +34,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AdminProfileSettings from './pages/admin/adminProfileSettings';
 import AdminProfileTimeline from './pages/admin/adminProfileTimeline';
 import UpdatePassword from './pages/admin/UpdatePassword'
+import Scholarships from './pages/Scholarships'
 
 
 function AppContent() {
@@ -75,6 +76,7 @@ function AppContent() {
           <Route path="/admin/profile-settings" element={<ProtectedRoute><AdminProfileSettings /></ProtectedRoute>} />
           <Route path="/admin/profile-timeline" element={<ProtectedRoute><AdminProfileTimeline /></ProtectedRoute>} />
           <Route path="/update-password" element={<UpdatePassword />} />
+          <Route path="/scholarships" element={<Scholarships />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
