@@ -140,7 +140,7 @@ export default function Footer() {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Projects', path: '/projects' },
-    { label: 'Gallery', path: 'p-gallery' },
+    { label: 'Gallery', path: '/gallery' },
     { label: 'Blog', path: '/blog' },
     { label: 'Contact', path: '/contact' },
   ]
