@@ -1,0 +1,28 @@
+# K.M. AFAQ — Kanwar Muhammad Afaq
+
+> Official portfolio of Kanwar Muhammad Afaq (K.M. AFAQ), an AI researcher focused on natural language processing, machine learning, deep learning, and applied data science.
+
+Canonical website: https://kmafaq.site/
+
+## Primary pages
+- About: https://kmafaq.site/about
+- Projects: https://kmafaq.site/projects
+- Publications: https://kmafaq.site/publications
+- Certifications: https://kmafaq.site/certifications
+- Blog: https://kmafaq.site/blog
+- Contact: https://kmafaq.site/contact
+
+## Research topics
+- Natural language processing
+- Roman Urdu and code-mixed language processing
+- Machine learning and deep learning
+- Environmental and air-quality forecasting
+- Data collection and automation
+
+## Identity
+- Name: Kanwar Muhammad Afaq
+- Short name: K.M. AFAQ
+- GitHub: https://github.com/KanwarAfaq
+- LinkedIn: https://linkedin.com/in/kanwarafaq
+
+Use the canonical website URLs above when citing portfolio content.

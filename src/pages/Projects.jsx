@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiSearch } from 'react-icons/fi'
-import { Helmet } from 'react-helmet-async'
 import { supabase } from '../lib/supabase'
 
 // New Components
@@ -35,20 +34,14 @@ export default function Projects() {
   const filtered = dbProjects.filter(p => {
     const matchCat = active === 'All' || p.category === active
     const matchSearch =
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.desc_text.toLowerCase().includes(search.toLowerCase()) ||
-      p.tags?.some(t => t.toLowerCase().includes(search.toLowerCase()))
+      (p.title || '').toLowerCase().includes(search.toLowerCase()) ||
+      (p.desc_text || '').toLowerCase().includes(search.toLowerCase()) ||
+      p.tags?.some(t => String(t).toLowerCase().includes(search.toLowerCase()))
     return matchCat && matchSearch
   })
 
   return (
-    <>
-      <Helmet>
-        <title>Projects | K.M. AFAQ</title>
-        <meta name="description" content="Explore the research projects and tools developed by K.M. Afaq, an AI Researcher specializing in NLP and machine learning." />
-      </Helmet>
-      
-      <div>
+    <div>
         {/* ── Banner ── */}
         <section
           className="relative h-64 md:h-80 flex items-center justify-center"
@@ -187,7 +180,6 @@ export default function Projects() {
             </motion.div>
           </div>
         </section>
-      </div>
-    </>
+    </div>
   )
 }

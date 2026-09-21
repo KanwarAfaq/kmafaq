@@ -1,7 +1,0 @@
-<a 
-  href="/resume.pdf" 
-  download="Kanwar_Muhammad_Afaq_CV.pdf"
-  className="btn-accent flex items-center gap-2"
->
-  <FiDownload /> Download CV
-</a>

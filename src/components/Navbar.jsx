@@ -13,7 +13,7 @@ const navLinks = [
   { label: 'Projects',   path: '/projects' },
   { label: 'Publications',   path: '/publications' },
 { label: 'Certifications', path: '/certifications' },
-{ label: 'Gallery', path: '/p-gallery' },
+{ label: 'Gallery', path: '/gallery' },
   //{ label: 'Gallery',    path: '/gallery' },
   { label: 'Blog',       path: '/blog' },
   { label: 'Contact',    path: '/contact' },

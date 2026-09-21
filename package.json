@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.mjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -44,9 +44,16 @@
     "vite": "^8.0.12",
     "vite-plugin-sitemap": "^0.8.2"
   },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "description": "Official portfolio of Kanwar Muhammad Afaq (K.M. AFAQ), AI researcher and NLP engineer.",
   "main": "eslint.config.js",
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "AI",
+    "NLP",
+    "machine learning",
+    "research",
+    "portfolio",
+    "Roman Urdu"
+  ],
+  "author": "Kanwar Muhammad Afaq",
   "license": "ISC"
 }

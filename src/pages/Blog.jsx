@@ -28,9 +28,9 @@ export default function Blog() {
 
   // Filter against your live cloud data records
   const filtered = dbBlogs.filter(b =>
-    b.title.toLowerCase().includes(search.toLowerCase()) ||
-    b.excerpt.toLowerCase().includes(search.toLowerCase()) ||
-    b.tags?.some(t => t.toLowerCase().includes(search.toLowerCase()))
+    (b.title || '').toLowerCase().includes(search.toLowerCase()) ||
+    (b.excerpt || '').toLowerCase().includes(search.toLowerCase()) ||
+    b.tags?.some(t => String(t).toLowerCase().includes(search.toLowerCase()))
   )
 
   return (
