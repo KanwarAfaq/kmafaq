@@ -1,18 +1,20 @@
 import { Helmet } from 'react-helmet-async'
 
 export const SITE_URL = 'https://kmafaq.site'
-export const DEFAULT_IMAGE =
-  'https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq_profile.jpeg'
+export const DEFAULT_IMAGE = `${SITE_URL}/afaq-profile.jpeg`
 
 export default function Seo({
   title = 'Kanwar Muhammad Afaq | AI Researcher',
   description = 'Official portfolio of Kanwar Muhammad Afaq (K.M. AFAQ), covering AI research, natural language processing, machine learning, publications, projects, and technical work.',
   path = '/',
   image = DEFAULT_IMAGE,
+  imageAlt = 'Kanwar Muhammad Afaq — AI Researcher',
   type = 'website',
   noindex = false,
   nofollow = false,
   jsonLd = null,
+  publishedTime = null,
+  modifiedTime = null,
 }) {
   const canonical = path ? new URL(path, SITE_URL).toString() : null
   const robots = [
@@ -27,22 +29,28 @@ export default function Seo({
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="author" content="Kanwar Muhammad Afaq" />
       <meta name="robots" content={robots} />
       <meta name="googlebot" content={robots} />
 
       {canonical ? <link rel="canonical" href={canonical} /> : null}
 
       <meta property="og:site_name" content="K.M. AFAQ" />
+      <meta property="og:locale" content="en_US" />
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       {canonical ? <meta property="og:url" content={canonical} /> : null}
       {image ? <meta property="og:image" content={image} /> : null}
+      {image ? <meta property="og:image:alt" content={imageAlt} /> : null}
+      {type === 'article' && publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
+      {type === 'article' && modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       {image ? <meta name="twitter:image" content={image} /> : null}
+      {image ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
 
       {jsonLd ? (
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>

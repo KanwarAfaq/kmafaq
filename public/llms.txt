@@ -9,8 +9,10 @@ Canonical website: https://kmafaq.site/
 - Projects: https://kmafaq.site/projects
 - Publications: https://kmafaq.site/publications
 - Certifications: https://kmafaq.site/certifications
+- Gallery: https://kmafaq.site/gallery
 - Blog: https://kmafaq.site/blog
 - Contact: https://kmafaq.site/contact
+- Scholarships tracker: https://kmafaq.site/scholarships
 
 ## Research topics
 - Natural language processing
@@ -25,4 +27,4 @@ Canonical website: https://kmafaq.site/
 - GitHub: https://github.com/KanwarAfaq
 - LinkedIn: https://linkedin.com/in/kanwarafaq
 
-Use the canonical website URLs above when citing portfolio content.
+Use the canonical website URLs above when citing portfolio content. The /all-in-one page is a convenience view and is not the canonical source for portfolio sections.

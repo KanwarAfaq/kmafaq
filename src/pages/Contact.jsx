@@ -71,9 +71,7 @@ export default function Contact() {
   // Initial local fallbacks to display instantly while Supabase resolves
   const defaultSocials = [
     { platform_name: 'GitHub', profile_url: 'https://github.com/KanwarAfaq' },
-    { platform_name: 'LinkedIn', profile_url: 'https://linkedin.com/in/kanwarafaq' },
-    { platform_name: 'Google Scholar', profile_url: 'https://scholar.google.com' },
-    { platform_name: 'Kaggle', profile_url: 'https://www.kaggle.com' }
+    { platform_name: 'LinkedIn', profile_url: 'https://linkedin.com/in/kanwarafaq' }
   ];
 
   const activeSocials = dbSocials.length > 0 ? dbSocials : defaultSocials;

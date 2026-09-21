@@ -667,7 +667,7 @@ const handleExportResumePdf = async () => {
 
             <div className="mt-12 text-center">
               <Link
-                to="/p-gallery"
+                to="/gallery"
                 className="inline-flex items-center gap-2 rounded-full border px-6 py-3 transition-colors duration-300 hover:bg-white/10"
                 style={{ borderColor: 'rgba(255,255,255,0.3)', color: 'white' }}
               >

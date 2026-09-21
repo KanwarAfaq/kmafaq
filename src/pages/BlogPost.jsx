@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiClock, FiTag, FiCalendar } from 'react-icons/fi'
 import { supabase } from '../lib/supabase'
 import Seo, { DEFAULT_IMAGE, SITE_URL } from '../components/Seo'
+import { sanitizeHtml } from '../utils/sanitizeHtml'
 
 export default function BlogPost() {
   const { slug } = useParams()
@@ -48,6 +49,8 @@ export default function BlogPost() {
 
     fetchPostData();
   }, [slug]);
+
+  const sanitizedContent = useMemo(() => sanitizeHtml(post?.content || ''), [post?.content])
 
   // Handle loading fallback gracefully
   if (loading) {
@@ -114,6 +117,9 @@ export default function BlogPost() {
         path={`/blog/${slug}`}
         image={articleImage}
         type="article"
+        imageAlt={post.title || 'K.M. AFAQ research article'}
+        publishedTime={post.date || null}
+        modifiedTime={post.updated_at || post.date || null}
         jsonLd={articleSchema}
       />
       {/* ── Banner ── */}
@@ -183,7 +189,7 @@ export default function BlogPost() {
               prose-blockquote:border-l-accent prose-blockquote:text-gray-500
               prose-table:text-sm prose-table:overflow-x-auto prose-th:bg-gray-100 dark:prose-th:bg-gray-800
               prose-img:rounded-xl prose-img:max-w-full prose-hr:border-gray-200 dark:prose-hr:border-gray-700"
-            dangerouslySetInnerHTML={{ __html: post.content || '' }}
+            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
 
           {/* Author Card */}

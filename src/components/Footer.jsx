@@ -91,11 +91,6 @@ export default function Footer() {
       platform_name: 'Email',
       profile_url: 'mailto:kmafaq786@email.com',
     },
-    {
-      platform_name: 'Google Scholar',
-      profile_url: 'https://scholar.google.com',
-    },
-    { platform_name: 'Kaggle', profile_url: 'https://www.kaggle.com' },
   ]
 
   // load active social links from Supabase

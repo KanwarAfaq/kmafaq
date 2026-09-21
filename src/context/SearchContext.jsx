@@ -17,9 +17,12 @@ export const SearchProvider = ({ children }) => {
           { title: 'Home', desc: 'Main landing page', path: '/', type: 'Page' },
           { title: 'About', desc: 'My background and skills', path: '/about', type: 'Page' },
           { title: 'Projects', desc: 'Research and development projects', path: '/projects', type: 'Page' },
-          { title: 'Gallery', desc: 'Visual showcase', path: '/p-gallery', type: 'Page' },
+          { title: 'Publications', desc: 'Academic publications and manuscripts', path: '/publications', type: 'Page' },
+          { title: 'Certifications', desc: 'Technical certifications and learning', path: '/certifications', type: 'Page' },
+          { title: 'Gallery', desc: 'Visual showcase', path: '/gallery', type: 'Page' },
           { title: 'Blog', desc: 'Articles and notes', path: '/blog', type: 'Page' },
           { title: 'Contact', desc: 'Get in touch', path: '/contact', type: 'Page' },
+          { title: 'Scholarships', desc: 'AI and NLP PhD opportunity tracker', path: '/scholarships', type: 'Page' },
           { title: 'All-in-One', desc: 'Single page view', path: '/all-in-one', type: 'Page' },
         ];
 

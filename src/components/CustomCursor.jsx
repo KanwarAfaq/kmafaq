@@ -1,46 +1,34 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef } from 'react'
 
-const CustomCursor = ({ color = "#6366f1" }) => { // Defaulted to your accent indigo
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [hoveringInteractive, setHoveringInteractive] = useState(false);
-
+export default function CustomCursor({ color = '#6366f1' }) {
+  const dotRef = useRef(null)
+  const ringRef = useRef(null)
   useEffect(() => {
-    const move = (e) => setPosition({ x: e.clientX, y: e.clientY });
-    
-    const addHover = () => setHoveringInteractive(true);
-    const removeHover = () => setHoveringInteractive(false);
-
-    window.addEventListener("pointermove", move);
-    
-    const elements = document.querySelectorAll("a, button, [role='button'], [data-cursor='interactive']");
-    elements.forEach((el) => {
-      el.addEventListener("pointerenter", addHover);
-      el.addEventListener("pointerleave", removeHover);
-    });
-
+    if (window.matchMedia?.('(pointer: coarse)').matches || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined
+    let frame = null
+    let x = -100
+    let y = -100
+    let hovering = false
+    const paint = () => {
+      frame = null
+      if (dotRef.current) dotRef.current.style.transform = `translate3d(${x - 4}px, ${y - 4}px, 0)`
+      if (ringRef.current) ringRef.current.style.transform = `translate3d(${x - 16}px, ${y - 16}px, 0) scale(${hovering ? 1.45 : 1})`
+    }
+    const schedule = () => { if (frame === null) frame = window.requestAnimationFrame(paint) }
+    const move = (event) => { x = event.clientX; y = event.clientY; schedule() }
+    const over = (event) => { hovering = Boolean(event.target?.closest?.("a, button, [role='button'], [data-cursor='interactive']")); schedule() }
+    window.addEventListener('pointermove', move, { passive: true })
+    document.addEventListener('pointerover', over, { passive: true })
     return () => {
-      window.removeEventListener("pointermove", move);
-      elements.forEach((el) => {
-        el.removeEventListener("pointerenter", addHover);
-        el.removeEventListener("pointerleave", removeHover);
-      });
-    };
-  }, []);
-
-  const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
-  if (isTouchDevice) return null;
-
+      window.removeEventListener('pointermove', move)
+      document.removeEventListener('pointerover', over)
+      if (frame !== null) window.cancelAnimationFrame(frame)
+    }
+  }, [])
   return (
     <>
-      <div
-        className="pointer-events-none fixed z-[9999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full mix-blend-difference transition-transform duration-75"
-        style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)`, backgroundColor: color }}
-      />
-      <div
-        className={`pointer-events-none fixed z-[9998] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-opacity-70 mix-blend-difference transition-all duration-150 ${hoveringInteractive ? "scale-150 bg-opacity-10" : "scale-100"}`}
-        style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)`, borderColor: color }}
-      />
+      <div ref={dotRef} aria-hidden="true" className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full mix-blend-difference" style={{ backgroundColor: color, transform: 'translate3d(-100px, -100px, 0)' }} />
+      <div ref={ringRef} aria-hidden="true" className="pointer-events-none fixed left-0 top-0 z-[9998] h-8 w-8 rounded-full border border-opacity-70 mix-blend-difference transition-transform duration-150" style={{ borderColor: color, transform: 'translate3d(-100px, -100px, 0)' }} />
     </>
-  );
-};
-export default CustomCursor;
+  )
+}

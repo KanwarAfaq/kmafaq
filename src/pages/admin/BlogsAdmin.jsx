@@ -8,6 +8,7 @@ import StatPill from '../../components/admin/StatPill'
 import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
 import { arrayToCsv, csvToArray, getRows, insertRow, patchRow, removeRow } from '../../lib/adminApi'
+import { sanitizeHtml } from '../../utils/sanitizeHtml'
 
 const emptyForm = { slug: '', title: '', date: '', read_time: '', excerpt: '', content: '', tags: '' }
 
@@ -153,7 +154,7 @@ export default function BlogsAdminV5() {
             <div className="w-full max-w-full overflow-x-auto">
               <article 
                 className="prose prose-base max-w-none dark:prose-invert break-words prose-img:max-w-full prose-img:h-auto prose-table:w-full" 
-                dangerouslySetInnerHTML={{ __html: selected.content || '' }} 
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(selected.content || '') }} 
               />
             </div>
           </div>

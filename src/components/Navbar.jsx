@@ -48,11 +48,12 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Primary navigation">
           {navLinks.map(link => (
             <Link
               key={link.path}
               to={link.path}
+              aria-current={pathname === link.path ? 'page' : undefined}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200
                 ${pathname === link.path
                   ? 'bg-accent text-white'
@@ -69,6 +70,8 @@ export default function Navbar() {
 
           {/* Search Button */}
           <button
+            type="button"
+            aria-label="Open site search"
             onClick={() => setOpen(true)}
             className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-accent hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
             title="Search"
@@ -81,17 +84,22 @@ export default function Navbar() {
             {themes.map(t => (
               <button
                 key={t.id}
+                type="button"
                 onClick={() => setColorTheme(t.id)}
+                aria-label={`Use ${t.label} color theme`}
+                aria-pressed={colorTheme === t.id}
                 title={t.label}
                 className={`w-4 h-4 rounded-full transition-all duration-200 hover:scale-125
                   ${colorTheme === t.id ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-950 scale-125' : ''}`}
-                style={{ backgroundColor: t.color, ringColor: t.color }}
+                style={{ backgroundColor: t.color }}
               />
             ))}
           </div>
 
           {/* Dark Mode Toggle */}
           <button
+            type="button"
+            aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             onClick={toggleDark}
             className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-accent hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
             title="Toggle dark mode"
@@ -101,6 +109,9 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen(m => !m)}
             className="lg:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-accent hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
           >
@@ -118,11 +129,12 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
           >
-            <div className="px-4 py-4 flex flex-col gap-1">
+            <nav className="px-4 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
               {navLinks.map(link => (
                 <Link
                   key={link.path}
                   to={link.path}
+                  aria-current={pathname === link.path ? 'page' : undefined}
                   onClick={() => setMenuOpen(false)}
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all
                     ${pathname === link.path
@@ -139,7 +151,10 @@ export default function Navbar() {
                 {themes.map(t => (
                   <button
                     key={t.id}
+                    type="button"
                     onClick={() => setColorTheme(t.id)}
+                    aria-label={`Use ${t.label} color theme`}
+                    aria-pressed={colorTheme === t.id}
                     title={t.label}
                     className={`w-5 h-5 rounded-full transition-all hover:scale-125
                       ${colorTheme === t.id ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-950 scale-125' : ''}`}
@@ -147,7 +162,7 @@ export default function Navbar() {
                   />
                 ))}
               </div>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

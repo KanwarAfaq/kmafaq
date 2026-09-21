@@ -5,6 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="format-detection" content="telephone=no" />
     <meta
       name="description"
       content="Official portfolio of Kanwar Muhammad Afaq (K.M. AFAQ), covering AI research, NLP, machine learning, publications, projects, and technical work."
@@ -20,6 +22,7 @@
     />
 
     <meta property="og:site_name" content="K.M. AFAQ" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Kanwar Muhammad Afaq | AI Researcher" />
     <meta
@@ -29,8 +32,9 @@
     <meta property="og:url" content="https://kmafaq.site/" />
     <meta
       property="og:image"
-      content="https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq_profile.jpeg"
+      content="https://kmafaq.site/afaq-profile.jpeg"
     />
+    <meta property="og:image:alt" content="Kanwar Muhammad Afaq — AI Researcher" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Kanwar Muhammad Afaq | AI Researcher" />
@@ -40,8 +44,9 @@
     />
     <meta
       name="twitter:image"
-      content="https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq_profile.jpeg"
+      content="https://kmafaq.site/afaq-profile.jpeg"
     />
+    <meta name="twitter:image:alt" content="Kanwar Muhammad Afaq — AI Researcher" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -54,37 +59,48 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main style="max-width:760px;margin:48px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6">
+        <h1>Kanwar Muhammad Afaq — AI Researcher</h1>
+        <p>Official portfolio covering natural language processing, machine learning, deep learning, publications, projects, certifications, and technical writing.</p>
+        <p><a href="/about">About</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/gallery">Gallery</a> · <a href="/blog">Blog</a> · <a href="/contact">Contact</a></p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
     <script>
       (function () {
+        if (window.location.pathname.startsWith('/admin') || window.location.pathname === '/update-password') return;
+
         if (!window.chatbase || window.chatbase("getState") !== "initialized") {
           window.chatbase = (...arguments) => {
-            if (!window.chatbase.q) {
-              window.chatbase.q = [];
-            }
+            if (!window.chatbase.q) window.chatbase.q = [];
             window.chatbase.q.push(arguments);
           };
           window.chatbase = new Proxy(window.chatbase, {
             get(target, prop) {
-              if (prop === "q") {
-                return target.q;
-              }
+              if (prop === "q") return target.q;
               return (...args) => target(prop, ...args);
             },
           });
         }
-        const onLoad = function () {
+
+        const loadChatbase = function () {
+          if (document.getElementById("GM2_AjQiwwQXGyTTnm6sJ")) return;
           const script = document.createElement("script");
           script.src = "https://www.chatbase.co/embed.min.js";
           script.id = "GM2_AjQiwwQXGyTTnm6sJ";
           script.domain = "www.chatbase.co";
+          script.async = true;
           document.body.appendChild(script);
         };
-        if (document.readyState === "complete") {
-          onLoad();
-        } else {
-          window.addEventListener("load", onLoad);
-        }
+
+        const schedule = function () {
+          if ("requestIdleCallback" in window) window.requestIdleCallback(loadChatbase, { timeout: 2500 });
+          else window.setTimeout(loadChatbase, 1500);
+        };
+
+        if (document.readyState === "complete") schedule();
+        else window.addEventListener("load", schedule, { once: true });
       })();
     </script>
   </body>

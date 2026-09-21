@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Navigate, Routes, Route, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
@@ -5,37 +6,38 @@ import Footer from './components/Footer'
 import GlobalSearch from './components/GlobalSearch'
 import ScrollToTop from './components/ScrollToTop'
 import CustomCursor from './components/CustomCursor'
-import Seo, { SITE_URL } from './components/Seo'
+import Seo, { DEFAULT_IMAGE, SITE_URL } from './components/Seo'
 import Home from './pages/Home'
-import About from './pages/About'
-import Projects from './pages/Projects'
-import Blog from './pages/Blog'
-import BlogPost from './pages/BlogPost'
-import Contact from './pages/Contact'
-import AllInOne from './pages/AllInOne'
-import Certifications from './pages/Certifications'
-import NotFound from './pages/NotFound'
-import Publications from './pages/Publications'
-import GallerySection from './components/GallerySection'
-import Login from './pages/admin/Login'
-import Dashboard from './pages/admin/Dashboard'
-import ProjectsAdmin from './pages/admin/ProjectsAdmin'
-import SocialLinksAdmin from './pages/admin/SocialLinksAdmin'
-import CertificationsAdmin from './pages/admin/CertificationsAdmin'
-import GraphNodesAdmin from './pages/admin/GraphNodesAdmin'
-import GraphEdgesAdmin from './pages/admin/GraphEdgesAdmin'
-import ProfileAssetsAdmin from './pages/admin/ProfileAssetsAdmin'
-import TechnicalSkillsAdmin from './pages/admin/TechnicalSkillsAdmin'
-import TestimonialsAdmin from './pages/admin/TestimonialsAdmin'
-import PublicationsAdminV3 from './pages/admin/PublicationsAdmin'
-import BlogsAdminV5 from './pages/admin/BlogsAdmin'
-import GalleryAdminV5 from './pages/admin/GalleryAdmin'
-import MessagesAdminV5 from './pages/admin/MessagesAdmin'
-import ProtectedRoute from './components/ProtectedRoute'
-import AdminProfileSettings from './pages/admin/adminProfileSettings'
-import AdminProfileTimeline from './pages/admin/adminProfileTimeline'
-import UpdatePassword from './pages/admin/UpdatePassword'
-import Scholarships from './pages/Scholarships'
+
+const About = lazy(() => import('./pages/About'))
+const Projects = lazy(() => import('./pages/Projects'))
+const Blog = lazy(() => import('./pages/Blog'))
+const BlogPost = lazy(() => import('./pages/BlogPost'))
+const Contact = lazy(() => import('./pages/Contact'))
+const AllInOne = lazy(() => import('./pages/AllInOne'))
+const Certifications = lazy(() => import('./pages/Certifications'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+const Publications = lazy(() => import('./pages/Publications'))
+const GallerySection = lazy(() => import('./components/GallerySection'))
+const Login = lazy(() => import('./pages/admin/Login'))
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'))
+const ProjectsAdmin = lazy(() => import('./pages/admin/ProjectsAdmin'))
+const SocialLinksAdmin = lazy(() => import('./pages/admin/SocialLinksAdmin'))
+const CertificationsAdmin = lazy(() => import('./pages/admin/CertificationsAdmin'))
+const GraphNodesAdmin = lazy(() => import('./pages/admin/GraphNodesAdmin'))
+const GraphEdgesAdmin = lazy(() => import('./pages/admin/GraphEdgesAdmin'))
+const ProfileAssetsAdmin = lazy(() => import('./pages/admin/ProfileAssetsAdmin'))
+const TechnicalSkillsAdmin = lazy(() => import('./pages/admin/TechnicalSkillsAdmin'))
+const TestimonialsAdmin = lazy(() => import('./pages/admin/TestimonialsAdmin'))
+const PublicationsAdminV3 = lazy(() => import('./pages/admin/PublicationsAdmin'))
+const BlogsAdminV5 = lazy(() => import('./pages/admin/BlogsAdmin'))
+const GalleryAdminV5 = lazy(() => import('./pages/admin/GalleryAdmin'))
+const MessagesAdminV5 = lazy(() => import('./pages/admin/MessagesAdmin'))
+const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'))
+const AdminProfileSettings = lazy(() => import('./pages/admin/adminProfileSettings'))
+const AdminProfileTimeline = lazy(() => import('./pages/admin/adminProfileTimeline'))
+const UpdatePassword = lazy(() => import('./pages/admin/UpdatePassword'))
+const Scholarships = lazy(() => import('./pages/Scholarships'))
 
 const personSchema = {
   '@type': 'Person',
@@ -43,6 +45,7 @@ const personSchema = {
   name: 'Kanwar Muhammad Afaq',
   alternateName: 'K.M. AFAQ',
   url: SITE_URL,
+  image: DEFAULT_IMAGE,
   jobTitle: 'AI Researcher',
   description:
     'AI researcher working across natural language processing, machine learning, deep learning, and applied data science.',
@@ -85,6 +88,17 @@ const aboutSchema = {
   mainEntity: personSchema,
 }
 
+const collectionSchema = (path, name, description) => ({
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${SITE_URL}${path}#collection`,
+  url: `${SITE_URL}${path}`,
+  name,
+  description,
+  about: { '@id': `${SITE_URL}/#person` },
+  isPartOf: { '@id': `${SITE_URL}/#website` },
+})
+
 const pageMeta = {
   '/': {
     title: 'Kanwar Muhammad Afaq | AI Researcher, NLP Engineer & Data Scientist',
@@ -102,21 +116,25 @@ const pageMeta = {
     title: 'AI & NLP Projects | K.M. AFAQ',
     description:
       'Explore AI, NLP, machine learning, automation, and data science projects developed by Kanwar Muhammad Afaq.',
+    jsonLd: collectionSchema('/projects', 'AI & NLP Projects | K.M. AFAQ', 'AI, NLP, machine learning, automation, and data science projects by Kanwar Muhammad Afaq.'),
   },
   '/publications': {
     title: 'Publications & Research | K.M. AFAQ',
     description:
       'Research publications and manuscripts by Kanwar Muhammad Afaq across NLP, code-mixed language processing, machine learning, and environmental forecasting.',
+    jsonLd: collectionSchema('/publications', 'Publications & Research | K.M. AFAQ', 'Research publications and manuscripts by Kanwar Muhammad Afaq.'),
   },
   '/certifications': {
     title: 'Certifications | K.M. AFAQ',
     description:
       'Technical certifications and professional learning completed by Kanwar Muhammad Afaq across AI, machine learning, data science, and engineering.',
+    jsonLd: collectionSchema('/certifications', 'Certifications | K.M. AFAQ', 'Technical certifications and professional learning completed by Kanwar Muhammad Afaq.'),
   },
   '/gallery': {
     title: 'Research & Professional Gallery | K.M. AFAQ',
     description:
       'A gallery of research, academic, professional, and project moments from Kanwar Muhammad Afaq.',
+    jsonLd: collectionSchema('/gallery', 'Research & Professional Gallery | K.M. AFAQ', 'Research, academic, professional, and project moments from Kanwar Muhammad Afaq.'),
   },
   '/blog': {
     title: 'AI, NLP & Machine Learning Blog | K.M. AFAQ',
@@ -140,6 +158,7 @@ const pageMeta = {
     title: 'AI & NLP PhD Scholarships Tracker | K.M. AFAQ',
     description:
       'A curated tracker of active PhD scholarship and research opportunities related to AI, NLP, and machine learning.',
+    jsonLd: collectionSchema('/scholarships', 'AI & NLP PhD Scholarships Tracker | K.M. AFAQ', 'A curated tracker of active AI, NLP, and machine learning PhD scholarship opportunities.'),
   },
 }
 
@@ -193,23 +212,36 @@ function RouteSeo({ pathname }) {
   )
 }
 
+function RouteLoader() {
+  return (
+    <div className="flex min-h-[45vh] items-center justify-center bg-white text-gray-500 dark:bg-gray-950 dark:text-gray-400" role="status" aria-live="polite">
+      <div className="flex items-center gap-3 text-sm">
+        <span className="h-3 w-3 animate-pulse rounded-full bg-accent" aria-hidden="true" />
+        Loading page…
+      </div>
+    </div>
+  )
+}
+
 function AppContent() {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin')
+  const isPrivateRoute = isAdminRoute || location.pathname === '/update-password'
 
   return (
     <div className="min-h-screen flex flex-col bg-white transition-colors duration-300 dark:bg-gray-950">
       <RouteSeo pathname={location.pathname} />
-      {!isAdminRoute ? <CustomCursor /> : null}
+      {!isPrivateRoute ? <CustomCursor /> : null}
       <Toaster
         position="bottom-right"
         toastOptions={{ style: { background: '#333', color: '#fff', borderRadius: '12px' } }}
       />
       <ScrollToTop />
-      {!isAdminRoute ? <GlobalSearch /> : null}
-      {!isAdminRoute ? <Navbar /> : null}
+      {!isPrivateRoute ? <GlobalSearch /> : null}
+      {!isPrivateRoute ? <Navbar /> : null}
       <main className="flex-1">
-        <Routes>
+        <Suspense fallback={<RouteLoader />}>
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
@@ -240,9 +272,10 @@ function AppContent() {
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/scholarships" element={<Scholarships />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
+          </Routes>
+        </Suspense>
       </main>
-      {!isAdminRoute ? <Footer /> : null}
+      {!isPrivateRoute ? <Footer /> : null}
     </div>
   )
 }
