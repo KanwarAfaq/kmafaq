@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiSearch } from 'react-icons/fi'
-import { Helmet } from 'react-helmet-async'
 import { supabase } from '../lib/supabase'
 
 // New Components
@@ -42,13 +41,7 @@ export default function Projects() {
   })
 
   return (
-    <>
-      <Helmet>
-        <title>Projects | K.M. AFAQ</title>
-        <meta name="description" content="Explore the research projects and tools developed by K.M. Afaq, an AI Researcher specializing in NLP and machine learning." />
-      </Helmet>
-      
-      <div>
+    <div>
         {/* ── Banner ── */}
         <section
           className="relative h-64 md:h-80 flex items-center justify-center"
@@ -187,7 +180,6 @@ export default function Projects() {
             </motion.div>
           </div>
         </section>
-      </div>
-    </>
+    </div>
   )
 }
