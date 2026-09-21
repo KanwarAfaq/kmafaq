@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiClock, FiTag, FiCalendar } from 'react-icons/fi'
 import { supabase } from '../lib/supabase'
+import Seo, { DEFAULT_IMAGE, SITE_URL } from '../components/Seo'
 
 export default function BlogPost() {
   const { slug } = useParams()
@@ -60,14 +61,61 @@ export default function BlogPost() {
 
   // Handle missing record view fallback
   if (!post) return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Post not found</h2>
-      <Link to="/blog" className="btn-accent">Back to Blogs</Link>
-    </div>
+    <>
+      <Seo
+        title="Article Not Found | K.M. AFAQ"
+        description="The requested article could not be found."
+        path={`/blog/${slug}`}
+        noindex
+        nofollow
+      />
+      <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Post not found</h2>
+        <Link to="/blog" className="btn-accent">Back to Blogs</Link>
+      </div>
+    </>
   )
+
+  const articleUrl = `${SITE_URL}/blog/${encodeURIComponent(slug)}`
+  const articleImage = post.image || post.cover_image || DEFAULT_IMAGE
+  const articleDescription =
+    post.excerpt ||
+    `Research article by Kanwar Muhammad Afaq about ${post.title || 'AI and machine learning'}.`
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${articleUrl}#article`,
+    mainEntityOfPage: articleUrl,
+    headline: post.title,
+    description: articleDescription,
+    image: articleImage,
+    datePublished: post.date || undefined,
+    dateModified: post.updated_at || post.date || undefined,
+    author: {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Kanwar Muhammad Afaq',
+      url: SITE_URL,
+    },
+    publisher: {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Kanwar Muhammad Afaq',
+    },
+    keywords: Array.isArray(post.tags) ? post.tags.join(', ') : undefined,
+  }
 
   return (
     <div>
+      <Seo
+        title={`${post.title} | K.M. AFAQ`}
+        description={articleDescription}
+        path={`/blog/${slug}`}
+        image={articleImage}
+        type="article"
+        jsonLd={articleSchema}
+      />
       {/* ── Banner ── */}
       <section
         className="relative h-56 md:h-72 flex items-end justify-start pb-8"
