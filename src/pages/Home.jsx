@@ -45,7 +45,7 @@ export default function Home() {
     repos: '0',
   })
   const [featuredProjects, setFeaturedProjects] = useState([])
-  const [cvUrl, setCvUrl] = useState('#')
+  const [cvUrl, setCvUrl] = useState(null)
   const [skillTags, setSkillTags] = useState([])
 
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function Home() {
     'Researching the intersection of Natural Language Processing and deep learning — building tools for code-mixed Roman Urdu text and air quality forecasting with CNN, LSTM & GRU models.'
   const profileImage =
     profile?.profile_image_url ||
-    'https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq_profile.jpeg'
+    '/afaq-profile.jpeg'
 
   const roleTags = tagline
     .split('·')
@@ -235,15 +235,17 @@ export default function Home() {
               View Projects <FiArrowRight />
             </Link>
 
-            <a
-              href={cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline"
-              style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}
-            >
-              <FiDownload /> Download CV
-            </a>
+            {cvUrl ? (
+              <a
+                href={cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline"
+                style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}
+              >
+                <FiDownload /> Download CV
+              </a>
+            ) : null}
           </motion.div>
 
           {socialLinks.length > 0 && (

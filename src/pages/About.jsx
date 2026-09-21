@@ -20,7 +20,7 @@ export default function About() {
   const [profile, setProfile] = useState(null)
   const [timelineItems, setTimelineItems] = useState([])
   const [dbTestimonials, setDbTestimonials] = useState([])
-  const [cvUrl, setCvUrl] = useState('#')
+  const [cvUrl, setCvUrl] = useState(null)
   const [dbSkills, setDbSkills] = useState([])
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export default function About() {
   const aboutImage =
     profile?.about_image_url ||
     profile?.profile_image_url ||
-    'https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq1.jpeg'
+    '/afaq-profile.jpeg'
 
   return (
     <div>
@@ -215,14 +215,16 @@ export default function About() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <a
-                href={cvUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-accent"
-              >
-                <FiDownload /> Download CV
-              </a>
+              {cvUrl ? (
+                <a
+                  href={cvUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-accent"
+                >
+                  <FiDownload /> Download CV
+                </a>
+              ) : null}
 
               <Link to="/contact" className="btn-outline">
                 <FiMail /> Contact Me

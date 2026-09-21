@@ -75,6 +75,7 @@ const homeSchema = {
       description:
         'Official portfolio of Kanwar Muhammad Afaq, featuring AI research, publications, projects, and technical writing.',
       inLanguage: 'en',
+      creator: { '@id': `${SITE_URL}/#person` },
     },
     personSchema,
   ],
@@ -153,6 +154,15 @@ const pageMeta = {
     title: 'Contact Kanwar Muhammad Afaq | AI Research & Collaboration',
     description:
       'Contact Kanwar Muhammad Afaq for AI research collaboration, NLP projects, technical partnerships, and academic discussions.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'ContactPage',
+      '@id': `${SITE_URL}/contact#contact`,
+      url: `${SITE_URL}/contact`,
+      name: 'Contact Kanwar Muhammad Afaq',
+      mainEntity: { '@id': `${SITE_URL}/#person` },
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+    },
   },
   '/scholarships': {
     title: 'AI & NLP PhD Scholarships Tracker | K.M. AFAQ',

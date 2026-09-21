@@ -107,7 +107,7 @@ export default function AllInOne() {
   const [dbPublications, setDbPublications] = useState([])
   const [dbTestimonials, setDbTestimonials] = useState([])
   const [dbBlogs, setDbBlogs] = useState([])
-  const [cvUrl, setCvUrl] = useState('#')
+  const [cvUrl, setCvUrl] = useState(null)
   const [dynamicSocials, setDynamicSocials] = useState([])
 const resumeRef = useRef(null)
 const [profile, setProfile] = useState(null)
@@ -302,11 +302,11 @@ const handleExportResumePdf = async () => {
   const profileImage =
     profile?.profile_image_url ||
     profile?.about_image_url ||
-    'https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq_profile.jpeg'
+    '/afaq-profile.jpeg'
   const aboutImage =
     profile?.about_image_url ||
     profile?.profile_image_url ||
-    'https://raw.githubusercontent.com/KanwarAfaq/kmafaq/refs/heads/main/src/images/afaq_profile.jpeg'
+    '/afaq-profile.jpeg'
   const location = profile?.location || 'Taoyuan, Taiwan 🇹🇼'
   const bio1 =
     profile?.bio_paragraph_1 ||
@@ -413,14 +413,16 @@ const handleExportResumePdf = async () => {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href={cvUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-accent flex items-center gap-2"
-              >
-                <FiDownload /> Download CV
-              </a>
+              {cvUrl ? (
+                <a
+                  href={cvUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-accent flex items-center gap-2"
+                >
+                  <FiDownload /> Download CV
+                </a>
+              ) : null}
               <button
                 onClick={() =>
                   document.getElementById('aio-contact')?.scrollIntoView({ behavior: 'smooth' })
@@ -512,14 +514,16 @@ const handleExportResumePdf = async () => {
                   ))}
                 </div>
 
-                <a
-                  href={cvUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-accent inline-flex items-center gap-2"
-                >
-                  <FiDownload /> Download CV
-                </a>
+                {cvUrl ? (
+                  <a
+                    href={cvUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-accent inline-flex items-center gap-2"
+                  >
+                    <FiDownload /> Download CV
+                  </a>
+                ) : null}
               </motion.div>
             </div>
           </div>

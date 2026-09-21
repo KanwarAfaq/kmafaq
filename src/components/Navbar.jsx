@@ -14,7 +14,6 @@ const navLinks = [
   { label: 'Publications',   path: '/publications' },
 { label: 'Certifications', path: '/certifications' },
 { label: 'Gallery', path: '/gallery' },
-  //{ label: 'Gallery',    path: '/gallery' },
   { label: 'Blog',       path: '/blog' },
   { label: 'Contact',    path: '/contact' },
   { label: '✦ All-in-One', path: '/all-in-one' },

@@ -201,7 +201,7 @@ export default function BlogPost() {
           >
             <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-accent flex-shrink-0">
               <img
-                src="https://res.cloudinary.com/dfmi4udfs/image/upload/v1782224423/gallery/general/IMG_2017_dflq3u.jpg"
+                src="/afaq-profile.jpeg"
                 alt="K.M. AFAQ"
                 className="w-full h-full object-cover"
               />
