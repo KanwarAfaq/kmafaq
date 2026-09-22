@@ -13,27 +13,27 @@
     },
     {
       "source": "/about",
-      "destination": "/index.html"
+      "destination": "/about/index.html"
     },
     {
       "source": "/projects",
-      "destination": "/index.html"
+      "destination": "/projects/index.html"
     },
     {
       "source": "/publications",
-      "destination": "/index.html"
+      "destination": "/publications/index.html"
     },
     {
       "source": "/certifications",
-      "destination": "/index.html"
+      "destination": "/certifications/index.html"
     },
     {
       "source": "/gallery",
-      "destination": "/index.html"
+      "destination": "/gallery/index.html"
     },
     {
       "source": "/blog",
-      "destination": "/index.html"
+      "destination": "/blog/index.html"
     },
     {
       "source": "/blog/:slug",
@@ -41,7 +41,7 @@
     },
     {
       "source": "/contact",
-      "destination": "/index.html"
+      "destination": "/contact/index.html"
     },
     {
       "source": "/all-in-one",
@@ -49,7 +49,7 @@
     },
     {
       "source": "/scholarships",
-      "destination": "/index.html"
+      "destination": "/scholarships/index.html"
     },
     {
       "source": "/update-password",

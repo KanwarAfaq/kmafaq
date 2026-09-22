@@ -73,6 +73,7 @@ export default function GlobalSearch() {
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search pages, projects, blog posts..."
+                aria-label="Search site content"
                 className="flex-1 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 outline-none text-base"
               />
               <div className="flex items-center gap-2">
@@ -80,6 +81,8 @@ export default function GlobalSearch() {
                   ESC
                 </kbd>
                 <button
+                  type="button"
+                  aria-label="Close site search"
                   onClick={() => setOpen(false)}
                   className="p-1 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                 >
@@ -101,6 +104,7 @@ export default function GlobalSearch() {
                 <div className="py-2">
                   {results.map((item, i) => (
                     <button
+                      type="button"
                       key={i}
                       onClick={() => handleSelect(item.path)}
                       className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left group"
@@ -132,6 +136,7 @@ export default function GlobalSearch() {
                   <div className="flex flex-wrap justify-center gap-2 text-xs">
                     {['NLP', 'Air Quality', 'Projects', 'Blog', 'Gallery'].map(hint => (
                       <button
+                        type="button"
                         key={hint}
                         onClick={() => setQuery(hint)}
                         className="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-accent hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"

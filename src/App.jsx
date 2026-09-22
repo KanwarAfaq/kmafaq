@@ -5,8 +5,8 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import GlobalSearch from './components/GlobalSearch'
 import ScrollToTop from './components/ScrollToTop'
-import CustomCursor from './components/CustomCursor'
-import Seo, { DEFAULT_IMAGE, SITE_URL } from './components/Seo'
+import Seo from './components/Seo'
+import { PAGE_META as pageMeta } from './config/seo'
 import Home from './pages/Home'
 
 const About = lazy(() => import('./pages/About'))
@@ -38,139 +38,6 @@ const AdminProfileSettings = lazy(() => import('./pages/admin/adminProfileSettin
 const AdminProfileTimeline = lazy(() => import('./pages/admin/adminProfileTimeline'))
 const UpdatePassword = lazy(() => import('./pages/admin/UpdatePassword'))
 const Scholarships = lazy(() => import('./pages/Scholarships'))
-
-const personSchema = {
-  '@type': 'Person',
-  '@id': `${SITE_URL}/#person`,
-  name: 'Kanwar Muhammad Afaq',
-  alternateName: 'K.M. AFAQ',
-  url: SITE_URL,
-  image: DEFAULT_IMAGE,
-  jobTitle: 'AI Researcher',
-  description:
-    'AI researcher working across natural language processing, machine learning, deep learning, and applied data science.',
-  sameAs: [
-    'https://github.com/KanwarAfaq',
-    'https://linkedin.com/in/kanwarafaq',
-  ],
-  knowsAbout: [
-    'Artificial Intelligence',
-    'Natural Language Processing',
-    'Machine Learning',
-    'Deep Learning',
-    'Roman Urdu',
-    'Code-mixed language processing',
-    'Air quality forecasting',
-  ],
-}
-
-const homeSchema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE_URL}/#website`,
-      url: `${SITE_URL}/`,
-      name: 'K.M. AFAQ',
-      description:
-        'Official portfolio of Kanwar Muhammad Afaq, featuring AI research, publications, projects, and technical writing.',
-      inLanguage: 'en',
-      creator: { '@id': `${SITE_URL}/#person` },
-    },
-    personSchema,
-  ],
-}
-
-const aboutSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfilePage',
-  '@id': `${SITE_URL}/about#profile`,
-  url: `${SITE_URL}/about`,
-  mainEntity: personSchema,
-}
-
-const collectionSchema = (path, name, description) => ({
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  '@id': `${SITE_URL}${path}#collection`,
-  url: `${SITE_URL}${path}`,
-  name,
-  description,
-  about: { '@id': `${SITE_URL}/#person` },
-  isPartOf: { '@id': `${SITE_URL}/#website` },
-})
-
-const pageMeta = {
-  '/': {
-    title: 'Kanwar Muhammad Afaq | AI Researcher, NLP Engineer & Data Scientist',
-    description:
-      'Official portfolio of Kanwar Muhammad Afaq (K.M. AFAQ): AI research, NLP, machine learning, publications, projects, certifications, and technical writing.',
-    jsonLd: homeSchema,
-  },
-  '/about': {
-    title: 'About Kanwar Muhammad Afaq | AI Researcher',
-    description:
-      'Learn about Kanwar Muhammad Afaq (K.M. AFAQ), his AI and NLP research interests, technical skills, experience, and research journey.',
-    jsonLd: aboutSchema,
-  },
-  '/projects': {
-    title: 'AI & NLP Projects | K.M. AFAQ',
-    description:
-      'Explore AI, NLP, machine learning, automation, and data science projects developed by Kanwar Muhammad Afaq.',
-    jsonLd: collectionSchema('/projects', 'AI & NLP Projects | K.M. AFAQ', 'AI, NLP, machine learning, automation, and data science projects by Kanwar Muhammad Afaq.'),
-  },
-  '/publications': {
-    title: 'Publications & Research | K.M. AFAQ',
-    description:
-      'Research publications and manuscripts by Kanwar Muhammad Afaq across NLP, code-mixed language processing, machine learning, and environmental forecasting.',
-    jsonLd: collectionSchema('/publications', 'Publications & Research | K.M. AFAQ', 'Research publications and manuscripts by Kanwar Muhammad Afaq.'),
-  },
-  '/certifications': {
-    title: 'Certifications | K.M. AFAQ',
-    description:
-      'Technical certifications and professional learning completed by Kanwar Muhammad Afaq across AI, machine learning, data science, and engineering.',
-    jsonLd: collectionSchema('/certifications', 'Certifications | K.M. AFAQ', 'Technical certifications and professional learning completed by Kanwar Muhammad Afaq.'),
-  },
-  '/gallery': {
-    title: 'Research & Professional Gallery | K.M. AFAQ',
-    description:
-      'A gallery of research, academic, professional, and project moments from Kanwar Muhammad Afaq.',
-    jsonLd: collectionSchema('/gallery', 'Research & Professional Gallery | K.M. AFAQ', 'Research, academic, professional, and project moments from Kanwar Muhammad Afaq.'),
-  },
-  '/blog': {
-    title: 'AI, NLP & Machine Learning Blog | K.M. AFAQ',
-    description:
-      'Articles and research notes by Kanwar Muhammad Afaq on AI, NLP, machine learning, deep learning, data science, and applied research.',
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'Blog',
-      '@id': `${SITE_URL}/blog#blog`,
-      url: `${SITE_URL}/blog`,
-      name: 'K.M. AFAQ Blog',
-      author: { '@id': `${SITE_URL}/#person` },
-    },
-  },
-  '/contact': {
-    title: 'Contact Kanwar Muhammad Afaq | AI Research & Collaboration',
-    description:
-      'Contact Kanwar Muhammad Afaq for AI research collaboration, NLP projects, technical partnerships, and academic discussions.',
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'ContactPage',
-      '@id': `${SITE_URL}/contact#contact`,
-      url: `${SITE_URL}/contact`,
-      name: 'Contact Kanwar Muhammad Afaq',
-      mainEntity: { '@id': `${SITE_URL}/#person` },
-      isPartOf: { '@id': `${SITE_URL}/#website` },
-    },
-  },
-  '/scholarships': {
-    title: 'AI & NLP PhD Scholarships Tracker | K.M. AFAQ',
-    description:
-      'A curated tracker of active PhD scholarship and research opportunities related to AI, NLP, and machine learning.',
-    jsonLd: collectionSchema('/scholarships', 'AI & NLP PhD Scholarships Tracker | K.M. AFAQ', 'A curated tracker of active AI, NLP, and machine learning PhD scholarship opportunities.'),
-  },
-}
 
 function RouteSeo({ pathname }) {
   const isPrivate = pathname.startsWith('/admin') || pathname === '/update-password'
@@ -241,7 +108,6 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col bg-white transition-colors duration-300 dark:bg-gray-950">
       <RouteSeo pathname={location.pathname} />
-      {!isPrivateRoute ? <CustomCursor /> : null}
       <Toaster
         position="bottom-right"
         toastOptions={{ style: { background: '#333', color: '#fff', borderRadius: '12px' } }}

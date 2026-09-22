@@ -40,6 +40,8 @@ function FlipCard({ item }) {
               <img
                 src={item.photo}
                 alt={item.name}
+                loading="lazy"
+                decoding="async"
                 className="h-14 w-14 rounded-full object-cover ring-2 ring-white/15"
                 loading="lazy"
               />

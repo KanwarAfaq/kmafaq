@@ -16,7 +16,13 @@ import {
   useReducedMotion,
   useSpring,
 } from 'framer-motion'
-import { supabase } from '../lib/supabase' // adjust path if your supabase client is elsewhere
+import { supabase } from '../lib/supabase'
+
+const FALLBACK_SOCIALS = [
+  { platform_name: 'GitHub', profile_url: 'https://github.com/KanwarAfaq' },
+  { platform_name: 'LinkedIn', profile_url: 'https://linkedin.com/in/kanwarafaq' },
+  { platform_name: 'Email', profile_url: 'mailto:kmafaq786@email.com' },
+]
 
 function getSocialIcon(platformName) {
   const key = platformName.trim().toLowerCase()
@@ -59,8 +65,8 @@ function MagneticChip({ href, label, icon }) {
     <motion.a
       ref={ref}
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={href.startsWith('mailto:') ? undefined : '_blank'}
+      rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={reduceMotion ? {} : { x, y }}
@@ -78,24 +84,12 @@ function MagneticChip({ href, label, icon }) {
 
 export default function Footer() {
   const reduceMotion = useReducedMotion()
-  const [socials, setSocials] = useState([])
+  const [socials, setSocials] = useState(FALLBACK_SOCIALS)
 
-  // fallback socials if DB is empty or fails
-  const fallbackSocials = [
-    { platform_name: 'GitHub', profile_url: 'https://github.com/KanwarAfaq' },
-    {
-      platform_name: 'LinkedIn',
-      profile_url: 'https://linkedin.com/in/kanwarafaq',
-    },
-    {
-      platform_name: 'Email',
-      profile_url: 'mailto:kmafaq786@email.com',
-    },
-  ]
-
-  // load active social links from Supabase
   useEffect(() => {
     let cancelled = false
+    let idleId = null
+    let timerId = null
 
     async function loadSocials() {
       try {
@@ -107,7 +101,7 @@ export default function Footer() {
 
         if (error) {
           console.error('Failed to load socials for footer', error)
-          if (!cancelled) setSocials(fallbackSocials)
+          if (!cancelled) setSocials(FALLBACK_SOCIALS)
           return
         }
 
@@ -115,19 +109,25 @@ export default function Footer() {
           if (data && data.length > 0) {
             setSocials(data)
           } else {
-            setSocials(fallbackSocials)
+            setSocials(FALLBACK_SOCIALS)
           }
         }
       } catch (err) {
         console.error('Footer socials error', err)
-        if (!cancelled) setSocials(fallbackSocials)
+        if (!cancelled) setSocials(FALLBACK_SOCIALS)
       }
     }
 
-    loadSocials()
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(loadSocials, { timeout: 2500 })
+    } else {
+      timerId = window.setTimeout(loadSocials, 1200)
+    }
 
     return () => {
       cancelled = true
+      if (idleId !== null && 'cancelIdleCallback' in window) window.cancelIdleCallback(idleId)
+      if (timerId !== null) window.clearTimeout(timerId)
     }
   }, [])
 

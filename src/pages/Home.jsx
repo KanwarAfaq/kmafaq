@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import HeroParticles from '../components/HeroParticles'
 import { supabase } from '../lib/supabase'
 import {
   FiGithub,
@@ -23,17 +22,6 @@ const fadeUp = {
 const stagger = {
   hidden: {},
   show: { transition: { staggerChildren: 0.15 } },
-}
-
-export function ParallaxImage() {
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 500], [0, 150])
-
-  return (
-    <motion.div style={{ y }}>
-      <img src="your-image.jpg" alt="Parallax" />
-    </motion.div>
-  )
 }
 
 export default function Home() {
@@ -172,12 +160,11 @@ export default function Home() {
       <section
         className="relative flex min-h-screen items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1800&q=90)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1800&q=75&auto=format&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
-        <HeroParticles />
         <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/40" />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent" />
 
@@ -193,6 +180,11 @@ export default function Home() {
                 <img
                   src={profileImage}
                   alt={fullName}
+                  width="160"
+                  height="160"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -254,8 +246,9 @@ export default function Home() {
                 <a
                   key={s.label}
                   href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+                  rel={s.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+                  aria-label={s.label}
                   className="rounded-xl border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md transition-all duration-200 hover:border-accent hover:bg-accent"
                 >
                   {s.icon}
@@ -327,6 +320,8 @@ export default function Home() {
                     <img
                       src={p.image}
                       alt={p.title}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -361,7 +356,7 @@ export default function Home() {
       <section
         className="relative overflow-hidden px-4 py-16"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&q=80)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=70&auto=format&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

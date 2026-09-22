@@ -129,7 +129,7 @@ export default function About() {
       <section
         className="relative flex h-64 items-center justify-center md:h-80"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=80)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=75&auto=format&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -164,6 +164,10 @@ export default function About() {
                 <img
                   src={aboutImage}
                   alt={fullName}
+                  width="320"
+                  height="320"
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -237,7 +241,7 @@ export default function About() {
       <section
         className="section-padding relative"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=80)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=70&auto=format&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

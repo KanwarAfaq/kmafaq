@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
+import { DEFAULT_IMAGE, SITE_URL } from '../config/seo'
 
-export const SITE_URL = 'https://kmafaq.site'
-export const DEFAULT_IMAGE = `${SITE_URL}/afaq-profile.jpeg`
+export { DEFAULT_IMAGE, SITE_URL } from '../config/seo'
 
 export default function Seo({
   title = 'Kanwar Muhammad Afaq | AI Researcher',

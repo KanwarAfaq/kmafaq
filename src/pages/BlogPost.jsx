@@ -202,7 +202,11 @@ export default function BlogPost() {
             <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-accent flex-shrink-0">
               <img
                 src="/afaq-profile.jpeg"
-                alt="K.M. AFAQ"
+                alt="Kanwar Muhammad Afaq"
+                width="56"
+                height="56"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
