@@ -53,41 +53,6 @@
       <!-- noscript:end -->
     </noscript>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
-      (function () {
-        if (window.location.pathname.startsWith('/admin') || window.location.pathname === '/update-password') return;
 
-        if (!window.chatbase || window.chatbase("getState") !== "initialized") {
-          window.chatbase = (...arguments) => {
-            if (!window.chatbase.q) window.chatbase.q = [];
-            window.chatbase.q.push(arguments);
-          };
-          window.chatbase = new Proxy(window.chatbase, {
-            get(target, prop) {
-              if (prop === "q") return target.q;
-              return (...args) => target(prop, ...args);
-            },
-          });
-        }
-
-        const loadChatbase = function () {
-          if (document.getElementById("GM2_AjQiwwQXGyTTnm6sJ")) return;
-          const script = document.createElement("script");
-          script.src = "https://www.chatbase.co/embed.min.js";
-          script.id = "GM2_AjQiwwQXGyTTnm6sJ";
-          script.domain = "www.chatbase.co";
-          script.async = true;
-          document.body.appendChild(script);
-        };
-
-        const schedule = function () {
-          if ("requestIdleCallback" in window) window.requestIdleCallback(loadChatbase, { timeout: 2500 });
-          else window.setTimeout(loadChatbase, 1500);
-        };
-
-        if (document.readyState === "complete") schedule();
-        else window.addEventListener("load", schedule, { once: true });
-      })();
-    </script>
   </body>
 </html>
