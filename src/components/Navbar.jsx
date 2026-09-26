@@ -6,8 +6,6 @@ import { useSearch } from '../context/SearchContext'
 import { PUBLIC_NAV_ITEMS } from '../config/navigation'
 import { FiSun, FiMoon, FiMenu, FiX, FiSearch } from 'react-icons/fi'
 
-const HEADER_NAV_PATHS = ['/', '/about', '/projects', '/publications', '/blog', '/all-in-one']
-
 const themes = [
   { id: 'theme1', color: '#6366f1', label: 'Indigo' },
   { id: 'theme2', color: '#10b981', label: 'Emerald' },
@@ -29,17 +27,17 @@ export default function Navbar() {
         </Link>
 
         <button type="button" onClick={() => setOpen(true)}
-          className="hidden min-w-0 flex-1 items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-left text-sm text-gray-500 transition-all hover:border-accent hover:bg-white hover:text-gray-700 md:flex md:max-w-xl dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-200"
+          className="hidden w-[260px] shrink-0 items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-left text-sm text-gray-500 transition-all hover:border-accent hover:bg-white hover:text-gray-700 md:flex lg:w-[300px] dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-200"
           aria-label="Search the complete website">
           <FiSearch size={17} className="shrink-0" />
           <span className="truncate">Search the complete website…</span>
           <kbd className="ml-auto hidden rounded-md border border-gray-200 bg-white px-2 py-0.5 text-[10px] text-gray-400 lg:inline dark:border-gray-700 dark:bg-gray-950">Ctrl K</kbd>
         </button>
 
-        <nav className="hidden items-center gap-1 2xl:flex" aria-label="Primary navigation">
-          {PUBLIC_NAV_ITEMS.filter((link) => HEADER_NAV_PATHS.includes(link.path)).map((link) => (
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex" aria-label="Primary navigation">
+          {PUBLIC_NAV_ITEMS.map((link) => (
             <Link key={link.path} to={link.path} aria-current={pathname === link.path ? 'page' : undefined}
-              className={`rounded-lg px-2.5 py-2 text-sm font-medium transition-all ${pathname === link.path
+              className={`rounded-lg px-2 py-2 text-[13px] font-medium whitespace-nowrap transition-all ${pathname === link.path
                 ? 'bg-accent text-white'
                 : 'text-gray-600 hover:bg-gray-100 hover:text-accent dark:text-gray-300 dark:hover:bg-gray-800'}`}>
               {link.label}
