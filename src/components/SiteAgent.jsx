@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { FiExternalLink, FiMessageCircle, FiSend, FiX } from 'react-icons/fi'
+import { trackEvent } from '../lib/analytics'
 
 const starters = [
   'What research does K.M. AFAQ work on?',
@@ -34,6 +35,7 @@ export default function SiteAgent() {
     setMessages(nextMessages)
     setInput('')
     setSending(true)
+    trackEvent('chatbot_question', { question_length: value.length })
 
     try {
       const response = await fetch('/api/chat', {
@@ -91,7 +93,7 @@ export default function SiteAgent() {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => { trackEvent('chatbot_opened'); setOpen(true) }}
         aria-label="Open K.M. AFAQ website assistant"
         className="fixed bottom-5 right-5 z-[90] flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-2xl transition hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent/30"
       >
