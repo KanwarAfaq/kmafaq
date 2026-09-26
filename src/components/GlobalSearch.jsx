@@ -2,13 +2,19 @@ import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useSearch } from '../context/SearchContext'
-import { FiSearch, FiX, FiCode, FiImage, FiBookOpen, FiLayout } from 'react-icons/fi'
+import { FiSearch, FiX, FiCode, FiImage, FiBookOpen, FiLayout, FiFileText, FiAward, FiBriefcase, FiUser, FiClock } from 'react-icons/fi'
 
 const typeIcons = {
   Page:    <FiLayout size={14} />,
   Project: <FiCode size={14} />,
   Gallery: <FiImage size={14} />,
   Blog:    <FiBookOpen size={14} />,
+  Publication: <FiFileText size={14} />,
+  Certification: <FiAward size={14} />,
+  Scholarship: <FiBriefcase size={14} />,
+  Skill: <FiCode size={14} />,
+  Timeline: <FiClock size={14} />,
+  Testimonial: <FiUser size={14} />,
 }
 
 const typeColors = {
@@ -16,6 +22,12 @@ const typeColors = {
   Project: 'bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400',
   Gallery: 'bg-pink-100 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400',
   Blog:    'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400',
+  Publication: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',
+  Certification: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
+  Scholarship: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300',
+  Skill: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
+  Timeline: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
+  Testimonial: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
 }
 
 export default function GlobalSearch() {
@@ -72,8 +84,8 @@ export default function GlobalSearch() {
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                placeholder="Search pages, projects, blog posts..."
-                aria-label="Search site content"
+                placeholder="Search projects, publications, articles, skills, scholarships..."
+                aria-label="Search complete website"
                 className="flex-1 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 outline-none text-base"
               />
               <div className="flex items-center gap-2">
@@ -132,7 +144,7 @@ export default function GlobalSearch() {
               {/* Default hint when empty */}
               {query.trim().length <= 1 && (
                 <div className="px-4 py-8 text-center text-gray-400 dark:text-gray-500">
-                  <p className="text-sm mb-3">Start typing to search across all content</p>
+                  <p className="text-sm mb-3">Search across the public website and live portfolio data</p>
                   <div className="flex flex-wrap justify-center gap-2 text-xs">
                     {['NLP', 'Air Quality', 'Projects', 'Blog', 'Gallery'].map(hint => (
                       <button
