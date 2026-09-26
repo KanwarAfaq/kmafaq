@@ -179,7 +179,7 @@ async function callNvidia(system, messages) {
   const key = process.env.NVIDIA_NIM_API_KEY
   if (!key) return null
 
-  const model = process.env.NVIDIA_NIM_MODEL || 'deepseek-ai/deepseek-v4-flash'
+  const model = process.env.NVIDIA_NIM_MODEL || 'deepseek-ai/deepseek-v4.1-flash'
   const response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
     method: 'POST',
     headers: {
