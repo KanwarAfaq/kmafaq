@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useSearch } from '../context/SearchContext'
 import { FiSearch, FiX, FiCode, FiImage, FiBookOpen, FiLayout, FiFileText, FiAward, FiBriefcase, FiUser, FiClock } from 'react-icons/fi'
+import { trackEvent } from '../lib/analytics'
 
 const typeIcons = {
   Page:    <FiLayout size={14} />,
@@ -53,6 +54,7 @@ export default function GlobalSearch() {
   }, [open, setQuery])
 
   const handleSelect = (path) => {
+    trackEvent('search_result_clicked', { destination: path, query_length: query.trim().length })
     navigate(path)
     setOpen(false)
     setQuery('')
