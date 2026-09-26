@@ -14,6 +14,7 @@ export const PUBLIC_NAV_SECTIONS = [
       { label: 'Certifications', path: '/certifications', keywords: ['certificates', 'courses'] },
       { label: 'Gallery', path: '/gallery', keywords: ['photos', 'events', 'gallery'] },
       { label: 'Blog', path: '/blog', keywords: ['articles', 'notes', 'blog'] },
+      { label: 'All-in-One', path: '/all-in-one', keywords: ['combined', 'portfolio', 'overview'] },
       { label: 'Scholarships', path: '/scholarships', keywords: ['phd', 'funding', 'opportunities'] },
       { label: 'Contact', path: '/contact', keywords: ['email', 'collaboration', 'contact'] },
     ],
@@ -30,11 +31,4 @@ export const SEARCH_STATIC_PAGES = [
     type: 'Page',
     searchText: [item.label, item.path, ...item.keywords].join(' '),
   })),
-  {
-    title: 'All-in-One Portfolio',
-    desc: 'Combined portfolio view',
-    path: '/all-in-one',
-    type: 'Page',
-    searchText: 'all in one combined portfolio overview',
-  },
 ]
