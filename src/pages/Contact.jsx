@@ -7,6 +7,7 @@ import {
 import { SiGooglescholar, SiKaggle } from 'react-icons/si'
 import { supabase } from '../lib/supabase'
 import toast from 'react-hot-toast'
+import { trackEvent } from '../lib/analytics'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -49,6 +50,7 @@ export default function Contact() {
       if (res.ok) {
         setStatus('idle')
         setForm({ name: '', email: '', subject: '', message: '' })
+        trackEvent('contact_message_sent')
         toast.success('Message sent successfully!', { id: toastId })
       } else {
         setStatus('idle')
@@ -64,6 +66,7 @@ export default function Contact() {
   const copyEmail = () => {
     navigator.clipboard.writeText('kmafaq786@email.com') 
     setCopied(true)
+    trackEvent('contact_email_copied')
     toast.success('Email copied to clipboard!')
     setTimeout(() => setCopied(false), 2000)
   }
