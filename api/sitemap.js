@@ -26,33 +26,32 @@ const validDate = (value) => {
   return Number.isNaN(date.getTime()) ? null : date.toISOString()
 }
 
-async function fetchBlogRoutes() {
+async function queryBlogs(select) {
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
   const anonKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
-
   if (!supabaseUrl || !anonKey) return []
 
-  const endpoint =
-    `${supabaseUrl.replace(/\/$/, '')}/rest/v1/blogs?select=slug,date&slug=not.is.null&order=date.desc`
-
+  const endpoint = `${supabaseUrl.replace(/\/$/, '')}/rest/v1/blogs?select=${encodeURIComponent(select)}&slug=not.is.null&order=date.desc`
   const response = await fetch(endpoint, {
-    headers: {
-      apikey: anonKey,
-      Authorization: `Bearer ${anonKey}`,
-    },
+    headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}`, Accept: 'application/json' },
   })
+  if (!response.ok) throw new Error(`Blog sitemap query returned HTTP ${response.status}`)
+  return response.json()
+}
 
-  if (!response.ok) {
-    throw new Error(`Blog sitemap query returned HTTP ${response.status}`)
+async function fetchBlogRoutes() {
+  let rows
+  try {
+    rows = await queryBlogs('slug,date,updated_at')
+  } catch {
+    rows = await queryBlogs('slug,date')
   }
-
-  const rows = await response.json()
   const seen = new Set()
 
   return (Array.isArray(rows) ? rows : [])
     .map((row) => ({
       slug: String(row?.slug || '').trim(),
-      lastmod: validDate(row?.date),
+      lastmod: validDate(row?.updated_at || row?.date),
     }))
     .filter(({ slug }) => slug.length > 0)
     .filter(({ slug }) => {
@@ -102,7 +101,7 @@ export default async function handler(req, res) {
   const xml = buildXml(blogRoutes)
 
   res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+  res.setHeader('Cache-Control', 'public, s-maxage=900, stale-while-revalidate=86400')
   res.setHeader('X-Content-Type-Options', 'nosniff')
   res.status(200)
 

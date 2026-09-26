@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import GlobalSearch from './components/GlobalSearch'
+import PublicSidebar from './components/PublicSidebar'
 import ScrollToTop from './components/ScrollToTop'
 import Seo from './components/Seo'
 import { PAGE_META as pageMeta } from './config/seo'
@@ -115,7 +116,9 @@ function AppContent() {
       <ScrollToTop />
       {!isPrivateRoute ? <GlobalSearch /> : null}
       {!isPrivateRoute ? <Navbar /> : null}
-      <main className="flex-1">
+      <div className="flex min-w-0 flex-1">
+        {!isPrivateRoute ? <PublicSidebar /> : null}
+        <main className="min-w-0 flex-1">
         <Suspense fallback={<RouteLoader />}>
           <Routes>
           <Route path="/" element={<Home />} />
@@ -150,7 +153,8 @@ function AppContent() {
           <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-      </main>
+        </main>
+      </div>
       {!isPrivateRoute ? <Footer /> : null}
     </div>
   )

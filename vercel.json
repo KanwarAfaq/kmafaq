@@ -12,6 +12,10 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/site-index.json",
+      "destination": "/api/site-index"
+    },
+    {
       "source": "/about",
       "destination": "/about/index.html"
     },
@@ -116,6 +120,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/site-index.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=3600"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
         }
       ]
     },

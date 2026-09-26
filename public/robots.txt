@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /update-password
 
 Sitemap: https://kmafaq.site/sitemap.xml

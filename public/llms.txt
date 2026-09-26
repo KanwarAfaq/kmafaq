@@ -3,6 +3,8 @@
 > Official portfolio of Kanwar Muhammad Afaq (K.M. AFAQ), an AI researcher focused on natural language processing, machine learning, deep learning, and applied data science.
 
 Canonical website: https://kmafaq.site/
+Live machine-readable site index: https://kmafaq.site/site-index.json
+Sitemap: https://kmafaq.site/sitemap.xml
 
 ## Primary pages
 - About: https://kmafaq.site/about
@@ -27,4 +29,4 @@ Canonical website: https://kmafaq.site/
 - GitHub: https://github.com/KanwarAfaq
 - LinkedIn: https://linkedin.com/in/kanwarafaq
 
-Use the canonical website URLs above when citing portfolio content. The /all-in-one page is a convenience view and is not the canonical source for portfolio sections.
+For current portfolio content, prefer the live site index and canonical page URLs above. The live index is generated from the same public Supabase-backed data used by the website, so it reflects newly published content without retraining an assistant.
