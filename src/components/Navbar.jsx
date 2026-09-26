@@ -6,6 +6,8 @@ import { useSearch } from '../context/SearchContext'
 import { PUBLIC_NAV_ITEMS } from '../config/navigation'
 import { FiSun, FiMoon, FiMenu, FiX, FiSearch } from 'react-icons/fi'
 
+const HEADER_NAV_PATHS = ['/', '/about', '/projects', '/publications', '/blog', '/all-in-one']
+
 const themes = [
   { id: 'theme1', color: '#6366f1', label: 'Indigo' },
   { id: 'theme2', color: '#10b981', label: 'Emerald' },
@@ -35,7 +37,7 @@ export default function Navbar() {
         </button>
 
         <nav className="hidden items-center gap-1 2xl:flex" aria-label="Primary navigation">
-          {PUBLIC_NAV_ITEMS.slice(0, 6).map((link) => (
+          {PUBLIC_NAV_ITEMS.filter((link) => HEADER_NAV_PATHS.includes(link.path)).map((link) => (
             <Link key={link.path} to={link.path} aria-current={pathname === link.path ? 'page' : undefined}
               className={`rounded-lg px-2.5 py-2 text-sm font-medium transition-all ${pathname === link.path
                 ? 'bg-accent text-white'
