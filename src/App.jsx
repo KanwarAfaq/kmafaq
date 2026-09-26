@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import GlobalSearch from './components/GlobalSearch'
 import PublicSidebar from './components/PublicSidebar'
+import SiteAgent from './components/SiteAgent'
 import ScrollToTop from './components/ScrollToTop'
 import Seo from './components/Seo'
 import { PAGE_META as pageMeta } from './config/seo'
@@ -115,6 +116,7 @@ function AppContent() {
       />
       <ScrollToTop />
       {!isPrivateRoute ? <GlobalSearch /> : null}
+      {!isPrivateRoute ? <SiteAgent /> : null}
       {!isPrivateRoute ? <Navbar /> : null}
       <div className="flex min-w-0 flex-1">
         {!isPrivateRoute ? <PublicSidebar /> : null}
