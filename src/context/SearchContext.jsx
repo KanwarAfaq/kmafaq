@@ -11,17 +11,18 @@ const tableConfigs = [
   { table: 'publications', type: 'Publication', path: () => '/publications' },
   { table: 'certifications', type: 'Certification', path: () => '/certifications' },
   { table: 'gallery', type: 'Gallery', path: () => '/gallery' },
-  { table: 'gallery_items', type: 'Gallery', path: () => '/gallery' },
   { table: 'technical_skills', type: 'Skill', path: () => '/about' },
   { table: 'profile_timeline', type: 'Timeline', path: () => '/about' },
   { table: 'testimonials', type: 'Testimonial', path: () => '/about' },
   { table: 'phd_scholarships', type: 'Scholarship', path: () => '/scholarships' },
+  { table: 'profile_settings', type: 'Profile', path: () => '/about' },
 ]
 
 const preferredTitleKeys = ['title', 'name', 'skill_name', 'institution', 'certificate_name', 'full_name', 'label', 'year']
 const preferredDescKeys = [
-  'excerpt', 'description', 'desc', 'desc_text', 'summary', 'journal', 'category',
-  'place', 'role', 'text_content', 'strategic_fit', 'country', 'salary_funding',
+  'excerpt', 'description', 'desc', 'desc_text', 'summary', 'abstract', 'journal', 'publisher',
+  'authors', 'issuer', 'skills', 'category', 'place', 'role', 'text_content',
+  'strategic_fit', 'country', 'salary_funding', 'hero_subtitle', 'bio_paragraph_1',
 ]
 
 function scalarText(value) {
