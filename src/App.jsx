@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Routes, Route, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
@@ -10,6 +10,7 @@ import ScrollToTop from './components/ScrollToTop'
 import Seo from './components/Seo'
 import { PAGE_META as pageMeta } from './config/seo'
 import Home from './pages/Home'
+import { trackPageView } from './lib/analytics'
 
 const About = lazy(() => import('./pages/About'))
 const Projects = lazy(() => import('./pages/Projects'))
@@ -106,6 +107,10 @@ function AppContent() {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin')
   const isPrivateRoute = isAdminRoute || location.pathname === '/update-password'
+
+  useEffect(() => {
+    if (!isPrivateRoute) trackPageView(location.pathname + location.search)
+  }, [location.pathname, location.search, isPrivateRoute])
 
   return (
     <div className="min-h-screen flex flex-col bg-white transition-colors duration-300 dark:bg-gray-950">
