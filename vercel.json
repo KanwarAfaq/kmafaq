@@ -1,6 +1,46 @@
 {
   "redirects": [
     {
+      "source": "/About",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/Publications",
+      "destination": "/publications",
+      "permanent": true
+    },
+    {
+      "source": "/Projects",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/Blog",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/Contact",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/Certifications",
+      "destination": "/certifications",
+      "permanent": true
+    },
+    {
+      "source": "/Gallery",
+      "destination": "/gallery",
+      "permanent": true
+    },
+    {
+      "source": "/Scholarships",
+      "destination": "/scholarships",
+      "permanent": true
+    },
+    {
       "source": "/p-gallery",
       "destination": "/gallery",
       "permanent": true
@@ -175,5 +215,7 @@
         }
       ]
     }
-  ]
+  ],
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false
 }
