@@ -81,7 +81,7 @@
     },
     {
       "source": "/blog/:slug",
-      "destination": "/index.html"
+      "destination": "/api/blog-page?slug=:slug"
     },
     {
       "source": "/contact",
@@ -155,15 +155,6 @@
       ]
     },
     {
-      "source": "/sitemap.xml",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
       "source": "/site-index.json",
       "headers": [
         {
@@ -217,5 +208,10 @@
     }
   ],
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "trailingSlash": false
+  "trailingSlash": false,
+  "functions": {
+    "api/blog-page.js": {
+      "includeFiles": "dist/index.html"
+    }
+  }
 }

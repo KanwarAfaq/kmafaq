@@ -29,21 +29,40 @@ const validDate = (value) => {
 async function queryBlogs(select) {
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
   const anonKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
-  if (!supabaseUrl || !anonKey) return []
-
-  const endpoint = `${supabaseUrl.replace(/\/$/, '')}/rest/v1/blogs?select=${encodeURIComponent(select)}&slug=not.is.null&order=date.desc`
-  const response = await fetch(endpoint, {
-    headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}`, Accept: 'application/json' },
-  })
-  if (!response.ok) throw new Error(`Blog sitemap query returned HTTP ${response.status}`)
-  return response.json()
+  if (!supabaseUrl || !anonKey) throw new Error('Missing sitemap database configuration')
+  const rows = []
+  const pageSize = 1000
+  for (let offset = 0; ; offset += pageSize) {
+    const endpoint = new URL('/rest/v1/blogs', supabaseUrl)
+    endpoint.searchParams.set('select', select)
+    endpoint.searchParams.set('slug', 'not.is.null')
+    endpoint.searchParams.set('order', 'date.desc,slug.asc')
+    endpoint.searchParams.set('limit', String(pageSize))
+    endpoint.searchParams.set('offset', String(offset))
+    const response = await fetch(endpoint, {
+      headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}`, Accept: 'application/json' },
+      signal: AbortSignal.timeout(10000),
+    })
+    if (!response.ok) {
+      const error = new Error(`Blog sitemap query returned HTTP ${response.status}`)
+      const body = await response.json().catch(() => ({}))
+      error.missingUpdatedAt = body.code === '42703' && String(body.message).includes('updated_at')
+      throw error
+    }
+    const page = await response.json()
+    if (!Array.isArray(page)) throw new Error('Invalid sitemap database response')
+    rows.push(...page)
+    if (rows.length > 49900) throw new Error('Sitemap requires splitting before publishing more URLs')
+    if (page.length < pageSize) return rows
+  }
 }
 
 async function fetchBlogRoutes() {
   let rows
   try {
     rows = await queryBlogs('slug,date,updated_at')
-  } catch {
+  } catch (error) {
+    if (!error.missingUpdatedAt) throw error
     rows = await queryBlogs('slug,date')
   }
   const seen = new Set()
@@ -95,7 +114,11 @@ export default async function handler(req, res) {
   try {
     blogRoutes = await fetchBlogRoutes()
   } catch (error) {
-    console.error('[sitemap] Falling back to static routes:', error)
+    console.error('[sitemap] Source unavailable:', error.message)
+    res.setHeader('Cache-Control', 'no-store')
+    res.setHeader('Retry-After', '300')
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+    return res.status(503).end(req.method === 'HEAD' ? undefined : 'Sitemap temporarily unavailable')
   }
 
   const xml = buildXml(blogRoutes)
