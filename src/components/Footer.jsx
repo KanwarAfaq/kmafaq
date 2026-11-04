@@ -295,6 +295,16 @@ export default function Footer() {
           </motion.div>
         </div>
 
+        <nav aria-label="Related independent resources" className="mt-9 rounded-3xl border border-gray-200 bg-white/80 p-6 dark:border-white/10 dark:bg-white/[0.04]">
+          <h2 className="mb-3 text-sm font-semibold">Explore related educational and technology resources</h2>
+          <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-gray-600 dark:text-white/70">
+            <a className="hover:text-accent hover:underline" href="https://kmafaq.online/">Technology articles and AI automation guides</a>
+            <a className="hover:text-accent hover:underline" href="https://scholarportal.site/">Scholarships and study-abroad opportunities</a>
+            <a className="hover:text-accent hover:underline" href="https://anytool.online/">Free calculators and online utilities</a>
+            <a className="hover:text-accent hover:underline" href="https://worksheet.live/">Printable learning worksheets</a>
+          </div>
+        </nav>
+
         {/* bottom strip */}
         <motion.div
           variants={revealItem}
