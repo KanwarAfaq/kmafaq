@@ -9,7 +9,7 @@ test('archive exposes safe crawlable article URLs and canonical metadata',()=>{
     {slug:'roman-urdu-nlp-challenges',title:'Duplicate title'},
     {slug:'github-pages-react-deployment',title:'React Deployment',excerpt:'Static hosting'},
   ]);
-  assert.match(html,/<title>AI & NLP Article Archive/);
+  assert.match(html,/<title>AI &amp; NLP Article Archive/);
   assert.match(html,/rel="canonical" href="https:\/\/kmafaq.site\/article-archive"/);
   assert.match(html,/href="\/blog\/roman-urdu-nlp-challenges"/);
   assert.match(html,/href="\/blog\/github-pages-react-deployment"/);
