@@ -8,6 +8,7 @@ const STATIC_ROUTES = [
   '/certifications',
   '/gallery',
   '/blog',
+  '/article-archive',
   '/contact',
   '/scholarships',
 ]
