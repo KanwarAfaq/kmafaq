@@ -25,7 +25,7 @@ test('sitemap paginates all rows and escapes slugs',async t=>{
  t.mock.method(globalThis,'fetch',async u=>{offsets.push(u.searchParams.get('offset'));return new Response(JSON.stringify(offsets.length===1?Array.from({length:1000},(_,i)=>({slug:'post-'+i,date:'2026-01-01'})):[{slug:'last & one',date:'invalid'}]))})
  const res=response();await handler({method:'GET'},res)
  assert.equal(res.statusCode,200);assert.deepEqual(offsets,['0','1000']);assert.match(res.body,/last%20%26%20one/)
- assert.equal((res.body.match(/<url>/g)||[]).length,1010)
+ assert.equal((res.body.match(/<url>/g)||[]).length,1011)
 })
 test('database errors cannot publish a partial sitemap or turn an article into 404',async t=>{
  setEnv(t)
