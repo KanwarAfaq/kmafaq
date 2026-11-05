@@ -137,6 +137,7 @@ export default function Footer() {
     { label: 'Projects', path: '/projects' },
     { label: 'Gallery', path: '/gallery' },
     { label: 'Blog', path: '/blog' },
+    { label: 'Article archive', path: '/article-archive' },
     { label: 'Contact', path: '/contact' },
   ]
 
@@ -247,7 +248,7 @@ export default function Footer() {
 
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                 {navLinks.map((l) => (
-                  <Link
+                  l.path === '/article-archive' ? <a key={l.path} href={l.path} className="group inline-flex items-center text-sm text-gray-600 transition duration-300 hover:text-accent dark:text-white/65 dark:hover:text-white">Article archive</a> : <Link
                     key={l.path}
                     to={l.path}
                     className="group inline-flex items-center text-sm text-gray-600 transition duration-300 hover:text-accent dark:text-white/65 dark:hover:text-white"

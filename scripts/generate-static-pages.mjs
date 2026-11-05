@@ -66,6 +66,7 @@ function renderNoscript(meta) {
     '        <h1>' + escapeHtml(meta.title) + '</h1>',
     '        <p>' + escapeHtml(meta.description) + '</p>',
     '        <p><a href="/about">About</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/gallery">Gallery</a> · <a href="/blog">Blog</a> · <a href="/contact">Contact</a></p>',
+    '        <p><a href="/article-archive">Browse all AI and NLP articles in the archive</a></p>',
     '      </main>',
     '      ' + NOSCRIPT_END,
   ].join('\n')
