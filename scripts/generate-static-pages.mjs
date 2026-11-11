@@ -81,13 +81,45 @@ function injectNoscript(html, block) {
   return html.slice(0, start) + block + html.slice(end + NOSCRIPT_END.length)
 }
 
+const SNAPSHOT_GUIDES = {
+  '/publications': [
+    ['How to read this research index', 'This collection brings together scholarly work and manuscripts associated with the author’s research areas: natural language processing, code-mixed Roman Urdu, machine learning and environmental forecasting. Research publications and manuscripts are different stages of academic work, so readers should check the publication venue, version, author list, date, and available full text for each record.'],
+    ['Research context', 'Roman Urdu language processing presents challenges including inconsistent spelling, mixed scripts and vocabulary, and limited annotated datasets. Research about these challenges may address classification, evaluation, tokenization, model comparison and responsible reporting. Environmental forecasting work can involve time-dependent measurements, model validation, and practical data limitations.'],
+    ['Where to explore next', 'For implementation context, browse the project index. For approachable research explanations and technical notes, browse the AI and machine-learning blog. The author profile gives background and links to academic and professional information.']
+  ],
+  '/blog': [
+    ['Topics covered', 'The technical writing section focuses on artificial intelligence, natural language processing, machine learning, deep learning and practical data science. Articles may explain research ideas, experimental workflows, programming choices, evaluation metrics, or lessons from applying models to real datasets.'],
+    ['Using the articles', 'Begin with the topic or problem that matches your interest. When an article discusses a research result, review its method, data, assumptions, limitations and references rather than assuming a technique works equally well everywhere. Distinguish tutorial examples from published experiments, and check publication dates before relying on technical details that may change.'],
+    ['Related research material', 'The publications page groups scholarly records while the projects section describes applied work. The about page provides the researcher’s background, and the contact page supports questions about possible technical or academic collaboration.']
+  ],
+  '/projects': [
+    ['Project areas', 'The projects section collects applied artificial intelligence, natural language processing, machine learning and data science work. Some projects demonstrate model development and evaluation; others involve data pipelines, automation or user-facing applications. The detailed project records provide the appropriate place to check each project’s scope and technologies.'],
+    ['What to examine', 'For any implementation, consider the problem definition, dataset provenance, preprocessing, validation procedure and evaluation results. A research prototype and a deployed service have different performance and reliability requirements. Results should be understood in the context of the data and setup used.'],
+    ['Related pages', 'Use the publications section for research manuscripts and papers, or the blog for technical writing. The about and contact pages explain the author’s interests and ways to discuss collaboration.']
+  ]
+};
+function renderStaticSnapshot(pathname,meta){
+  const sections=SNAPSHOT_GUIDES[pathname]||[
+    ['Explore this section',meta.description],
+    ['Research focus','This portfolio covers natural language processing, AI and machine learning research, applied data science and technical work. Read the dedicated project, publication and article pages for methods and details, and use the contact page for collaboration enquiries.']
+  ];
+  const articles=sections.map(([heading,copy])=>'<section><h2>'+escapeHtml(heading)+'</h2><p>'+escapeHtml(copy)+'</p></section>').join('');
+  const nav='<nav aria-label="Portfolio sections"><a href="/about">Researcher profile</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/blog">Technical articles</a> · <a href="/contact">Contact</a></nav>';
+  return '<main data-seo-snapshot="true" style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;line-height:1.65"><h1>'+escapeHtml(meta.title)+'</h1><p>'+escapeHtml(meta.description)+'</p>'+articles+nav+'</main>';
+}
+function injectStaticSnapshot(html,pathname,meta){
+  const marker='<div id="root"></div>';
+  if(!html.includes(marker))throw new Error('Vite root placeholder missing');
+  return html.replace(marker,'<div id="root">'+renderStaticSnapshot(pathname,meta)+'</div>');
+}
+
 const source = await readFile('dist/index.html', 'utf8')
 
 for (const [pathname, meta] of Object.entries(PAGE_META)) {
-  const html = injectNoscript(
+  const html = injectStaticSnapshot(injectNoscript(
     injectSeo(source, renderSeo(pathname, meta)),
     renderNoscript(meta)
-  )
+  ), pathname, meta)
   const destination =
     pathname === '/' ? 'dist/index.html' : join('dist', pathname.slice(1), 'index.html')
 
