@@ -120,6 +120,9 @@ function injectStaticSnapshot(html,pathname,meta){
 }
 
 const source = await readFile('dist/index.html', 'utf8')
+// Preserve the unmodified React shell for server-rendered dynamic blog articles.
+// Static route snapshots below replace #root and cannot be used as an article template.
+await writeFile('dist/app-shell.html', source, 'utf8')
 
 for (const [pathname, meta] of Object.entries(PAGE_META)) {
   const html = injectStaticSnapshot(injectNoscript(
