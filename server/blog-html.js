@@ -1,4 +1,5 @@
 import { AUTHOR_NAME, DEFAULT_IMAGE, SITE_URL } from '../src/config/seo.js'
+import { articleGuides } from '../src/config/article-guides.js'
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
 const date = value => value && Number.isFinite(Date.parse(value)) ? new Date(value).toISOString() : undefined
@@ -7,7 +8,8 @@ const webUrl = value => {
 }
 export function renderBlogHtml(template, post, slug) {
   const canonical = `${SITE_URL}/blog/${encodeURIComponent(slug)}`
-  const title = `${post.title} | K.M. AFAQ`
+  const guide = articleGuides[slug]
+  const title = `${guide?.title || post.title} | K.M. AFAQ`
   const description = post.excerpt || `Research article by ${AUTHOR_NAME} about ${post.title || 'AI and machine learning'}.`
   const image = webUrl(post.image || post.cover_image) || DEFAULT_IMAGE
   const schema = {
@@ -33,7 +35,8 @@ export function renderBlogHtml(template, post, slug) {
     .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
     .replace(/<\/(p|div|h[1-6]|li)>|<br\s*\/?>/gi, '\n\n')
     .replace(/<[^>]*>/g, '').split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean)
-  const body = `<main data-seo-article="true"><article><h1>${escape(post.title)}</h1><p>${escape(description)}</p>${paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}<a href="/blog">All articles</a></article></main>`
+  const supplement = guide ? '<section><h2>Practical guide</h2>'+guide.sections.map(([heading,copy])=>'<h3>'+escape(heading)+'</h3><p>'+escape(copy)+'</p>').join('')+'<h3>Further reading</h3><ul>'+guide.links.map(([label,url])=>'<li><a href="'+escape(url)+'" rel="noopener noreferrer">'+escape(label)+'</a></li>').join('')+'</ul></section>' : ''
+  const body = `<main data-seo-article="true"><article><h1>${escape(post.title)}</h1><p>${escape(description)}</p>${paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}${supplement}<a href="/blog">All articles</a></article></main>`
   if (!template.includes('<!-- seo:start -->') || !template.includes('<div id="root"></div>')) throw new Error('Missing HTML template markers')
   return template.replace(/<!-- seo:start -->[\s\S]*?<!-- seo:end -->/, head)
     .replace(/<noscript>[\s\S]*?<\/noscript>/gi, '')
