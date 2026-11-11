@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8')
       return res.status(404).end(req.method === 'HEAD' ? undefined : '<!doctype html><html lang="en"><head><title>Article not found | K.M. AFAQ</title><meta name="robots" content="noindex,follow"></head><body><h1>Article not found</h1><a href="/blog">Browse articles</a></body></html>')
     }
-    const template = await readFile(join(process.cwd(), 'dist/index.html'), 'utf8')
+    const template = await readFile(join(process.cwd(), 'dist/app-shell.html'), 'utf8')
     const html = renderBlogHtml(template, rows[0], slug)
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600')
