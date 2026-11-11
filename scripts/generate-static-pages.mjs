@@ -63,7 +63,7 @@ function renderNoscript(meta) {
   return [
     NOSCRIPT_START,
     '      <main style="max-width:760px;margin:48px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6">',
-    '        <h1>' + escapeHtml(meta.title) + '</h1>',
+    '        <p><strong>' + escapeHtml(meta.title) + '</strong></p>',
     '        <p>' + escapeHtml(meta.description) + '</p>',
     '        <p><a href="/about">About</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/gallery">Gallery</a> · <a href="/blog">Blog</a> · <a href="/contact">Contact</a></p>',
     '        <p><a href="/article-archive">Browse all AI and NLP articles in the archive</a></p>',
@@ -83,16 +83,22 @@ function injectNoscript(html, block) {
 
 const SNAPSHOT_GUIDES = {
   '/publications': [
+    ['Evaluation and reproducibility', 'When comparing papers in natural language processing, look for the dataset split, training settings, baseline systems, random seeds and limitations described by the authors. Multiple measurements and transparent error analysis can help distinguish a robust result from an isolated score. This index is for research discovery: readers should follow each original paper, persistent publication link or repository for the complete experimental details rather than relying only on a short portfolio summary.'],
+
     ['How to read this research index', 'This collection brings together scholarly work and manuscripts associated with the author’s research areas: natural language processing, code-mixed Roman Urdu, machine learning and environmental forecasting. Research publications and manuscripts are different stages of academic work, so readers should check the publication venue, version, author list, date, and available full text for each record.'],
     ['Research context', 'Roman Urdu language processing presents challenges including inconsistent spelling, mixed scripts and vocabulary, and limited annotated datasets. Research about these challenges may address classification, evaluation, tokenization, model comparison and responsible reporting. Environmental forecasting work can involve time-dependent measurements, model validation, and practical data limitations.'],
     ['Where to explore next', 'For implementation context, browse the project index. For approachable research explanations and technical notes, browse the AI and machine-learning blog. The author profile gives background and links to academic and professional information.']
   ],
   '/blog': [
+    ['Reading technical examples responsibly', 'AI tooling changes quickly, so a tutorial may depend on software versions, training data and external services available when it was written. Before reusing an example, check that the dependencies remain maintained, that permissions and licensing permit your use, and that any results are evaluated on appropriate data. Where a post compares models, consider both their accuracy and computational cost. The linked projects and publications offer additional context about research work and applied implementation.'],
+
     ['Topics covered', 'The technical writing section focuses on artificial intelligence, natural language processing, machine learning, deep learning and practical data science. Articles may explain research ideas, experimental workflows, programming choices, evaluation metrics, or lessons from applying models to real datasets.'],
     ['Using the articles', 'Begin with the topic or problem that matches your interest. When an article discusses a research result, review its method, data, assumptions, limitations and references rather than assuming a technique works equally well everywhere. Distinguish tutorial examples from published experiments, and check publication dates before relying on technical details that may change.'],
     ['Related research material', 'The publications page groups scholarly records while the projects section describes applied work. The about page provides the researcher’s background, and the contact page supports questions about possible technical or academic collaboration.']
   ],
   '/projects': [
+    ['From idea to evaluation', 'A useful machine-learning project description explains its input data, intended users and measurable objective. For a text processing system, this includes language coverage, text normalization, representations and the evaluation metric. A time-series forecasting system should describe the training horizon, prediction target, leakage controls and performance across different periods. Review code and documentation where supplied, and avoid assuming one prototype generalizes to every dataset or deployment environment.'],
+
     ['Project areas', 'The projects section collects applied artificial intelligence, natural language processing, machine learning and data science work. Some projects demonstrate model development and evaluation; others involve data pipelines, automation or user-facing applications. The detailed project records provide the appropriate place to check each project’s scope and technologies.'],
     ['What to examine', 'For any implementation, consider the problem definition, dataset provenance, preprocessing, validation procedure and evaluation results. A research prototype and a deployed service have different performance and reliability requirements. Results should be understood in the context of the data and setup used.'],
     ['Related pages', 'Use the publications section for research manuscripts and papers, or the blog for technical writing. The about and contact pages explain the author’s interests and ways to discuss collaboration.']
