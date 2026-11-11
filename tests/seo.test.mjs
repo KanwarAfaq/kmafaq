@@ -40,3 +40,12 @@ test('missing articles return real 404 without caching',async t=>{
  const res=response();await blogHandler({method:'GET',query:{slug:'missing'}},res)
  assert.equal(res.statusCode,404);assert.match(res.headers['X-Robots-Tag'],/noindex/)
 })
+
+
+test('dynamic article endpoint reads an untouched app shell after static snapshots are generated',()=>{
+ const builder=readFileSync(new URL('../scripts/generate-static-pages.mjs',import.meta.url),'utf8')
+ const endpoint=readFileSync(new URL('../api/blog-page.js',import.meta.url),'utf8')
+ assert.match(builder,/writeFile\('dist\/app-shell\.html', source/)
+ assert.match(endpoint,/dist\/app-shell\.html/)
+ assert.doesNotMatch(endpoint,/join\(process\.cwd\(\), 'dist\/index\.html'\)/)
+})
