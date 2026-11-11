@@ -5,6 +5,7 @@ import { FiArrowLeft, FiClock, FiTag, FiCalendar } from 'react-icons/fi'
 import { supabase } from '../lib/supabase'
 import Seo, { DEFAULT_IMAGE, SITE_URL } from '../components/Seo'
 import { sanitizeHtml } from '../utils/sanitizeHtml'
+import { articleGuides } from '../config/article-guides'
 
 export default function BlogPost() {
   const { slug } = useParams()
@@ -79,6 +80,7 @@ export default function BlogPost() {
     </>
   )
 
+  const guide = articleGuides[slug]
   const articleUrl = `${SITE_URL}/blog/${encodeURIComponent(slug)}`
   const articleImage = post.image || post.cover_image || DEFAULT_IMAGE
   const articleDescription =
@@ -112,7 +114,7 @@ export default function BlogPost() {
   return (
     <div>
       <Seo
-        title={`${post.title} | K.M. AFAQ`}
+        title={`${guide?.title || post.title} | K.M. AFAQ`}
         description={articleDescription}
         path={`/blog/${slug}`}
         image={articleImage}
@@ -192,6 +194,12 @@ export default function BlogPost() {
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
 
+          {guide && <section className="prose prose-lg dark:prose-invert max-w-none mt-8">
+            <h2>Practical guide</h2>
+            {guide.sections.map(([heading,copy])=><section key={heading}><h3>{heading}</h3><p>{copy}</p></section>)}
+            <h3>Further reading</h3>
+            <ul>{guide.links.map(([label,url])=><li key={url}><a href={url} rel="noopener noreferrer">{label}</a></li>)}</ul>
+          </section>}
           {/* Author Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
