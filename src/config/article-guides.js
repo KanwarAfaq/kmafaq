@@ -1,6 +1,28 @@
 // Original reader-facing supplements for existing short technical articles.
 // The same text is rendered in the public UI and initial server HTML.
 export const articleGuides = {
+ 'air-quality-deep-learning': {
+  title: 'Air Quality Forecasting with CNN, LSTM and GRU',
+  sections: [
+   ['Define the forecast before choosing a model',
+    'Air-quality forecasting predicts a quantity such as PM2.5 concentration or an Air Quality Index (AQI) value at a specified future time. These are not interchangeable targets: PM2.5 is a pollutant concentration, while an AQI combines pollutant information according to a published scale. Before training a model, state the location, sampling frequency, target unit and horizon. A one-hour forecast and a next-day forecast should not be evaluated or compared as though they are the same problem.'],
+   ['Start with data quality and credible baselines',
+    'Air-quality sensor records can contain missing hours, instrument changes, extreme events and spatial differences between monitoring stations. Inspect the proportion and duration of missing periods, check units and document any sensor calibration. Impute missing inputs using information available at prediction time; do not fill a test-period gap using future observations. Compare every neural model against simple persistence, seasonal persistence and a conventional statistical baseline. Without these reference points, a smaller neural-model error does not show that the added complexity is useful.'],
+   ['Why temporal CNN, LSTM and GRU behave differently',
+    'A temporal convolutional model uses local filters to identify patterns within a selected history window. Its computational work can be parallelized, but the input window and receptive field determine how much past context it can use. LSTM recurrent networks update a memory state using gates and can model temporal relationships; the effective memory still depends on the data and training procedure. GRU networks use a simplified gating arrangement and often have fewer parameters than comparable LSTMs. Neither architecture is universally more accurate: model size, features, forecast horizon and the quality of the data can change the outcome.'],
+   ['Use time-aware evaluation to prevent leakage',
+    'Split data chronologically into training, validation and held-out test periods; avoid random row splits that mix earlier and later sensor observations. Fit scalers, imputers and feature selection only on the training period. If you train with rolling windows, ensure no label from the future leaks into an input sequence and document whether adjacent windows share observations. Evaluate multiple prediction horizons separately. Reporting the same model on several seasons or sensor locations can also reveal whether its performance generalizes beyond one weather pattern.'],
+   ['Interpret error metrics and practical usefulness',
+    'Mean absolute error (MAE) is expressed in the target unit and can be easier to interpret than squared error. Root mean squared error (RMSE) emphasizes larger mistakes; both should be computed on the same test points and units when models are compared. Aggregate scores can hide errors during sudden pollution events, so examine high-concentration periods, forecast delay and residuals by season. Include training or inference cost only if it was measured on comparable hardware. Any numerical results need a documented dataset, preprocessing protocol, dates and evaluation code to be independently reproduced.'],
+   ['What the example comparison does and does not establish',
+    'The model comparison above illustrates important trade-offs, but its short summary is not a substitute for an independently reproducible benchmark. In particular, different time horizons, datasets or evaluation splits cannot establish a general CNN-versus-LSTM-versus-GRU ranking. Treat model-choice statements as hypotheses to validate against your own station data. For official definitions of the US AQI, consult the AirNow explanation; for access to open air-quality observations, review OpenAQ and its coverage and licensing notes.']
+  ],
+  links: [
+   ['AirNow: Air Quality Index basics','https://www.airnow.gov/aqi/aqi-basics/'],
+   ['OpenAQ: open air-quality data','https://openaq.org/'],
+   ['Research publications and methods','/publications']
+  ]
+ },
  'roman-urdu-nlp-challenges': {
   title: 'Roman Urdu NLP: Spelling, Data and Evaluation',
   sections: [
