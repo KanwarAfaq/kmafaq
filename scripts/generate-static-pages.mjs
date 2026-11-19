@@ -65,7 +65,7 @@ function renderNoscript(meta) {
     '      <main style="max-width:760px;margin:48px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6">',
     '        <p><strong>' + escapeHtml(meta.title) + '</strong></p>',
     '        <p>' + escapeHtml(meta.description) + '</p>',
-    '        <p><a href="/about">About</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/gallery">Gallery</a> · <a href="/blog">Blog</a> · <a href="/contact">Contact</a></p>',
+    '        <p><a href="/about">About</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/gallery">Gallery</a> · <a href="/certifications">Certifications</a> · <a href="/scholarships">Scholarships</a> · <a href="/blog">Blog</a> · <a href="/contact">Contact</a></p>',
     '        <p><a href="/article-archive">Browse all AI and NLP articles in the archive</a></p>',
     '      </main>',
     '      ' + NOSCRIPT_END,
@@ -110,7 +110,7 @@ function renderStaticSnapshot(pathname,meta){
     ['Research focus','This portfolio covers natural language processing, AI and machine learning research, applied data science and technical work. Read the dedicated project, publication and article pages for methods and details, and use the contact page for collaboration enquiries.']
   ];
   const articles=sections.map(([heading,copy])=>'<section><h2>'+escapeHtml(heading)+'</h2><p>'+escapeHtml(copy)+'</p></section>').join('');
-  const nav='<nav aria-label="Portfolio sections"><a href="/about">Researcher profile</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/blog">Technical articles</a> · <a href="/article-archive">Complete article archive</a> · <a href="/contact">Contact</a></nav>';
+  const nav='<nav aria-label="Portfolio sections"><a href="/about">Researcher profile</a> · <a href="/projects">Projects</a> · <a href="/publications">Publications</a> · <a href="/certifications">Certifications</a> · <a href="/scholarships">Scholarships</a> · <a href="/gallery">Research gallery</a> · <a href="/blog">Technical articles</a> · <a href="/article-archive">Complete article archive</a> · <a href="/contact">Contact</a></nav>';
   return '<main data-seo-snapshot="true" style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;line-height:1.65"><h1>'+escapeHtml(meta.title)+'</h1><p>'+escapeHtml(meta.description)+'</p>'+articles+nav+'</main>';
 }
 function injectStaticSnapshot(html,pathname,meta){
