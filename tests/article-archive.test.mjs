@@ -13,6 +13,10 @@ test('archive exposes safe crawlable article URLs and canonical metadata',()=>{
   assert.match(html,/rel="canonical" href="https:\/\/kmafaq.site\/article-archive"/);
   assert.match(html,/href="\/blog\/roman-urdu-nlp-challenges"/);
   assert.match(html,/href="\/blog\/github-pages-react-deployment"/);
+  assert.match(html,/How to use this technical article archive/);
+  assert.match(html,/href="\/publications"/);
+  assert.match(html,/href="\/projects"/);
+  assert.match(html,/Browse the available articles/);
   assert.equal((html.match(/href="\/blog\/roman-urdu-nlp-challenges"/g)||[]).length,1);
 });
 test('archive escapes injected titles and rejects unsafe slugs',()=>{
