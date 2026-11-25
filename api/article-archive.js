@@ -15,7 +15,11 @@ export function renderArchive(rows){
  '<style>body{font:16px/1.65 system-ui;background:#f7fafc;color:#18304b;max-width:950px;margin:auto;padding:28px 20px}a{color:#075caa}li{margin:14px 0;padding:12px 16px;border:1px solid #dde7f0;border-radius:12px;background:white}li p{margin:6px 0 0;color:#526579;font-size:14px}nav{display:flex;gap:18px;margin-bottom:28px}h1{line-height:1.2}ol{padding-left:26px}</style></head><body>'+
  '<nav aria-label="Breadcrumb"><a href="/">K.M. AFAQ</a><a href="/blog">Blog</a></nav>'+
  '<main><h1>'+esc(title)+'</h1><p>'+esc(description)+'</p>'+
- (entries.length?'<ol>'+list+'</ol>':'<p>Articles are currently unavailable. Please revisit the main blog.</p>')+
+ '<section aria-labelledby="archive-guide"><h2 id="archive-guide">How to use this technical article archive</h2>'+
+ '<p>This archive collects the author\'s technical explanations rather than a list of unrelated search topics. Start with a question you want to answer: how to evaluate a code-mixed language model, how to compare time-series forecasting methods, or how to publish a React application. Each article links to a deeper explanation of the problem, common trade-offs and steps to verify the outcome.</p>'+
+ '<p>If you are comparing machine-learning methods, distinguish an illustrative example from a published benchmark. Check dataset provenance, train/test separation, preprocessing, metrics and reported limitations before applying a result elsewhere. For deployment tutorials, verify the platform documentation and tool versions against your own project.</p></section>'+
+ (entries.length?'<section aria-labelledby="archive-articles"><h2 id="archive-articles">Browse the available articles</h2><ol>'+list+'</ol></section>':'<p>Articles are currently unavailable. Please revisit the main blog.</p>')+
+ '<section aria-labelledby="archive-related"><h2 id="archive-related">More research and project context</h2><p>For academic publications and manuscripts, browse the <a href="/publications">research publications</a> section. The <a href="/projects">projects</a> index covers applied work; the <a href="/about">author profile</a> explains the research interests behind these notes. Use the <a href="/contact">contact page</a> for questions about potential technical or academic collaboration.</p></section>'+
  '</main><footer><a href="/blog">Back to all blog posts</a></footer></body></html>';
 }
 export default async function handler(req,res){
