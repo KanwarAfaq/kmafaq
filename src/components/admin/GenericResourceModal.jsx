@@ -35,6 +35,7 @@ export default function GenericResourceModal({
   }
 
   async function handleUpload(field, file) {
+    if (!file || uploadingField) return
     const fieldName = field.name
     try {
       setUploadingField(fieldName)
@@ -55,6 +56,12 @@ export default function GenericResourceModal({
 
   function submit(e) {
     e.preventDefault()
+    if (uploadingField || loading) return
+    const missingFile = fields.find((field) => field.type === 'file' && field.required && !form[field.name])
+    if (missingFile) {
+      toast.error(`Please upload ${missingFile.label || missingFile.name} first.`)
+      return
+    }
     const payload = {}
     fields.forEach((field) => {
       const value = form[field.name]
@@ -134,7 +141,7 @@ export default function GenericResourceModal({
                           className="flex items-center gap-3 rounded-2xl border border-dashed border-gray-300 bg-white px-4 py-4 text-sm text-gray-700 hover:border-accent hover:text-accent dark:border-gray-700 dark:bg-gray-950 dark:text-gray-300"
                         >
                           <FiFileText size={20} />
-                          <span className="truncate">PDF uploaded — click to preview</span>
+                          <span className="truncate">File uploaded — click to preview</span>
                         </a>
                       ) : (
                         <img
@@ -153,10 +160,12 @@ export default function GenericResourceModal({
                           type="file"
                           className="hidden"
                           accept={field.accept || 'image/*'}
-                          onChange={(e) =>
-                            e.target.files?.[0] &&
-                            handleUpload(field, e.target.files[0])
-                          }
+                          disabled={Boolean(uploadingField) || loading}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0]
+                            e.target.value = ''
+                            if (file) handleUpload(field, file)
+                          }}
                         />
                       </label>
 
@@ -234,7 +243,7 @@ export default function GenericResourceModal({
             </button>
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || Boolean(uploadingField)}
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-accent px-4 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
             >
               {initialData ? <FiSave size={16} /> : <FiPlus size={16} />}
