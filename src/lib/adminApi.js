@@ -129,30 +129,30 @@ export async function uploadProjectImage(file) {
 // ---------- Cloudinary uploads (main path) ----------
 
 export async function uploadImage(file, folder = 'portfolio/misc') {
+  if (!file || !file.size) throw new Error('Please select a non-empty file.')
   if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
-    throw new Error('Cloudinary env vars missing (cloud name or upload preset)')
+    throw new Error('Upload configuration is missing. Check the Cloudinary cloud name and unsigned upload preset in deployment settings.')
   }
 
-  const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`
-
+  const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name)
+  const resourceType = isPdf ? 'raw' : 'auto'
+  const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`
   const formData = new FormData()
   formData.append('file', file)
   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
   formData.append('folder', folder)
 
-  const res = await fetch(uploadUrl, {
-    method: 'POST',
-    body: formData,
-  })
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    console.error('Cloudinary upload failed:', res.status, text)
-    throw new Error('Cloudinary upload failed')
+  let res
+  try {
+    res = await fetch(uploadUrl, { method: 'POST', body: formData })
+  } catch {
+    throw new Error('Could not reach the upload service. Check your internet connection and retry.')
   }
-
-  const data = await res.json()
-  // This is the URL we will store in Supabase
+  const data = await res.json().catch(() => null)
+  if (!res.ok) {
+    throw new Error(`Upload failed (HTTP ${res.status}): ${data?.error?.message || 'Cloudinary rejected the file. Check the upload preset and file limits.'}`)
+  }
+  if (!data?.secure_url) throw new Error('Upload service did not return a file URL.')
   return data.secure_url
 }
 
