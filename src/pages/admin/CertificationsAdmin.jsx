@@ -5,7 +5,7 @@ export default function CertificationsAdmin() {
     <AdminResourcePage
       table="certifications"
       title="Certifications"
-      subtitle="Manage certificates, issuers, verification links, and PDF files."
+      subtitle="Manage certificates, issuers, verification links, PDFs, and images."
       fields={[
         {
           name: 'title',
@@ -50,10 +50,10 @@ export default function CertificationsAdmin() {
         },
         {
           name: 'pdf_url',
-          label: 'Certificate PDF',
+          label: 'Certificate PDF or image',
           type: 'file',
           required: true,
-          accept: 'application/pdf',
+          accept: 'application/pdf,.pdf,image/jpeg,image/png,image/webp',
           folder: 'certifications/pdfs',
           full: true,
         },
